@@ -32,10 +32,6 @@ client.on('ready', () => {
 client.on('message', async msg => {
 	const curDay = new Date().getDay();
 
-	if (!allowedDays.includes(curDay)) {
-		return;
-	}
-
 	const msgContent = msg.content.toLowerCase();
 	const toCheck = ['qual', 'som', 'gado'];
 	const toCheckGado = ['quem', 'gado'];
@@ -44,12 +40,12 @@ client.on('message', async msg => {
 		return msg.reply('É o robs 🐂🐂🐂');
 	}
 
-	if (msgContent === 'qual som o gado faz?') {
+	if (toCheck.every(s => msgContent.includes(s))) {
 		return msg.reply('Vamo joga um CS rapaziada');
 	}
 
-	if (toCheck.every(s => msgContent.includes(s))) {
-		return msg.reply('Vamo joga um CS rapaziada');
+	if (!allowedDays.includes(curDay)) {
+		return;
 	}
 
 	if ((msg.channelId = slappersId && msg.author.id === robsId)) {
