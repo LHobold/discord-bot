@@ -6,6 +6,7 @@ require('dotenv').config({ path: '.env' });
 // Users
 const robsId = '232157423081619457';
 const earlId = '232189605414305795';
+const pauloId = '232157488529670145';
 
 // Channels
 const slappersId = '869363826540281916';
@@ -76,13 +77,24 @@ client.on('message', msg => {
 client.on('presenceUpdate', (oldMember, newMember) => {
 	const curDay = new Date().getDay();
 
-	if (!allowedDays.includes(curDay)) {
-		return;
-	}
-
 	if (newMember.status === 'online' && newMember.userId === earlId) {
 		const slappersChannel = newMember.guild.channels.cache.get(slappersId);
 		// slappersChannel.send(`Vermes`).catch(console.error);
+	}
+
+	if (
+		(oldMember.status === 'online' || oldMember.status === 'idle') &&
+		newMember.userId === pauloId &&
+		newMember.status === 'offline'
+	) {
+		const slappersChannel = newMember.guild.channels.cache.get(slappersId);
+		slappersChannel
+			.send(`Não tinha ninguém on então o <@${pauloId}> foi dormir`)
+			.catch(console.error);
+	}
+
+	if (!allowedDays.includes(curDay)) {
+		return;
 	}
 
 	if (newMember.status === 'online' && newMember.userId === robsId) {
