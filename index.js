@@ -1,117 +1,144 @@
-const Discord = require('discord.js');
-const upperName = require('./utils/upperName').default;
+const Discord = require("discord.js");
+const upperName = require("./utils/upperName").default;
 
-require('dotenv').config({ path: '.env' });
+require("dotenv").config({ path: ".env" });
 
 // Users
-const robsId = '232157423081619457';
-const earlId = '232189605414305795';
-const pauloId = '232157488529670145';
+const robsId = "232157423081619457";
+const earlId = "232189605414305795";
+const pauloId = "232157488529670145";
 
 // Channels
-const slappersId = '869363826540281916';
+const slappersId = "869363826540281916";
+const botModId = "869364246213967882";
 
 // Roles
-const gadoId = '898985262770688111';
+const gadoId = "898985262770688111";
 
 // Others
-const allowedDays = [0, 6];
+const allowedDays = [0, 6]; // Sat - Sun
+const nekoCommands = [
+  "!fuck",
+  "!suck",
+  "!boobjob",
+  "!blowjob",
+  "!anal",
+  "!test",
+];
 ////////////////////////////////////////////////////
 
 const client = new Discord.Client({
-	intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_PRESENCES'],
+  intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_PRESENCES"],
 });
 client.login(process.env.BOT_TOKEN);
 
 /////////////////////// LISTENERS /////////////////
 
-client.on('ready', () => {
-	client.user.setActivity('mato pro boi');
-	console.log('Ready');
+client.on("ready", () => {
+  client.user.setActivity("mato pro boi");
+  console.log("Ready");
 });
 
-client.on('message', async msg => {
-	const curDay = new Date().getDay();
+// Gado robson
 
-	const msgContent = msg.content.toLowerCase();
-	const toCheck = ['qual', 'som', 'gado'];
-	const toCheckGado = ['quem', 'gado'];
+client.on("message", async (msg) => {
+  const curDay = new Date().getDay();
 
-	if (toCheckGado.every(s => msgContent.includes(s))) {
-		return msg.reply('É o robs 🐂🐂🐂');
-	}
+  const msgContent = msg.content.toLowerCase();
+  const toCheck = ["qual", "som", "gado"];
+  const toCheckGado = ["quem", "gado"];
 
-	if (toCheck.every(s => msgContent.includes(s))) {
-		return msg.reply('Vamo joga um CS rapaziada');
-	}
+  if (toCheckGado.every((s) => msgContent.includes(s))) {
+    return msg.reply("É o robs 🐂🐂🐂");
+  }
 
-	if (!allowedDays.includes(curDay)) {
-		return;
-	}
+  if (toCheck.every((s) => msgContent.includes(s))) {
+    return msg.reply("Vamo joga um CS rapaziada");
+  }
 
-	if ((msg.channelId = slappersId && msg.author.id === robsId)) {
-		const slappersChannel = msg.guild.channels.cache.get(slappersId);
-		slappersChannel.send(`Gado de mais`).catch(console.error);
-	}
+  if (!allowedDays.includes(curDay)) {
+    return;
+  }
+
+  if ((msg.channelId = slappersId && msg.author.id === robsId)) {
+    const slappersChannel = msg.guild.channels.cache.get(slappersId);
+    slappersChannel.send(`Gado de mais`).catch(console.error);
+  }
 });
 
-client.on('message', msg => {
-	const msgContent = msg.content.toLowerCase();
-	if (msgContent.trim().startsWith('!b:')) {
-		let champName = msgContent.split(':')[1].trim();
+// General
 
-		if (champName.includes("'")) {
-			const nameArr = champName.split("'");
-			champName = upperName(nameArr[0]) + upperName(nameArr[1]);
-		} else {
-			champName = upperName(champName);
-		}
+client.on("message", (msg) => {
+  const slappersChannel = msg.guild.channels.cache.get(slappersId);
+  const botmodChannel = msg.guild.channels.cache.get(botModId);
 
-		const link = `https://www.lolvvv.com/pt/champion/${champName}/probuilds`;
+  const msgContent = msg.content.toLowerCase();
+  if (msgContent.trim().startsWith("!b:")) {
+    let champName = msgContent.split(":")[1].trim();
 
-		const slappersChannel = msg.guild.channels.cache.get(slappersId);
-		slappersChannel.send(link).catch(console.error);
-	}
+    if (champName.includes("'")) {
+      const nameArr = champName.split("'");
+      champName = upperName(nameArr[0]) + upperName(nameArr[1]);
+    } else {
+      champName = upperName(champName);
+    }
+
+    const link = `https://www.lolvvv.com/pt/champion/${champName}/probuilds`;
+
+    slappersChannel.send(link).catch(console.error);
+  }
+
+  if (
+    msg.channelId === botModId &&
+    nekoCommands.some((s) => msgContent.includes(s))
+  ) {
+    clearTimeout(purgeTimer);
+    const purgeTimer = setTimeout(() => {
+      botmodChannel.send("!purge").catch(console.error);
+    }, 5000);
+  }
 });
 
-client.on('presenceUpdate', (oldMember, newMember) => {
-	const curDay = new Date().getDay();
+// Presence update //
 
-	if (newMember.status === 'online' && newMember.userId === earlId) {
-		const slappersChannel = newMember.guild.channels.cache.get(slappersId);
-		// slappersChannel.send(`Vermes`).catch(console.error);
-	}
+client.on("presenceUpdate", (oldMember, newMember) => {
+  const curDay = new Date().getDay();
 
-	if (
-		(oldMember.status === 'online' || oldMember.status === 'idle') &&
-		newMember.userId === pauloId &&
-		newMember.status === 'offline'
-	) {
-		const slappersChannel = newMember.guild.channels.cache.get(slappersId);
-		slappersChannel
-			.send(`Não tinha ninguém on então o <@${pauloId}> foi dormir`)
-			.catch(console.error);
-	}
+  if (newMember.status === "online" && newMember.userId === earlId) {
+    const slappersChannel = newMember.guild.channels.cache.get(slappersId);
+    // slappersChannel.send(`Vermes`).catch(console.error);
+  }
 
-	if (!allowedDays.includes(curDay)) {
-		return;
-	}
+  if (
+    (oldMember.status === "online" || oldMember.status === "idle") &&
+    newMember.userId === pauloId &&
+    newMember.status === "offline"
+  ) {
+    const slappersChannel = newMember.guild.channels.cache.get(slappersId);
+    slappersChannel
+      .send(`Não tinha ninguém on então o <@${pauloId}> foi dormir`)
+      .catch(console.error);
+  }
 
-	if (newMember.status === 'online' && newMember.userId === robsId) {
-		const slappersChannel = newMember.guild.channels.cache.get(slappersId);
-		slappersChannel
-			.send(`O gado está online 🐂🐂🐂 <@${robsId}>`)
-			.catch(console.error);
+  if (!allowedDays.includes(curDay)) {
+    return;
+  }
 
-		const gadoRole = newMember.guild.roles.cache.get(gadoId);
-		newMember.member.roles.remove(gadoRole);
-	}
+  if (newMember.status === "online" && newMember.userId === robsId) {
+    const slappersChannel = newMember.guild.channels.cache.get(slappersId);
+    slappersChannel
+      .send(`O gado está online 🐂🐂🐂 <@${robsId}>`)
+      .catch(console.error);
 
-	if (newMember.status === 'idle' && newMember.userId === robsId) {
-		const slappersChannel = newMember.guild.channels.cache.get(slappersId);
-		slappersChannel.send(`<@${robsId}> foi gadar 🐂🐂🐂 `).catch(console.error);
+    const gadoRole = newMember.guild.roles.cache.get(gadoId);
+    newMember.member.roles.remove(gadoRole);
+  }
 
-		const gadoRole = newMember.guild.roles.cache.get(gadoId);
-		newMember.member.roles.add(gadoRole);
-	}
+  if (newMember.status === "idle" && newMember.userId === robsId) {
+    const slappersChannel = newMember.guild.channels.cache.get(slappersId);
+    slappersChannel.send(`<@${robsId}> foi gadar 🐂🐂🐂 `).catch(console.error);
+
+    const gadoRole = newMember.guild.roles.cache.get(gadoId);
+    newMember.member.roles.add(gadoRole);
+  }
 });
