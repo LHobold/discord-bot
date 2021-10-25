@@ -100,15 +100,17 @@ client.on("presenceUpdate", (oldMember, newMember) => {
     // slappersChannel.send(`Vermes`).catch(console.error);
   }
 
-  if (
-    (oldMember.status === "online" || oldMember.status === "idle") &&
-    newMember.userId === pauloId &&
-    newMember.status === "offline"
-  ) {
-    const slappersChannel = newMember.guild.channels.cache.get(slappersId);
-    slappersChannel
-      .send(`Não tinha ninguém on então o <@${pauloId}> foi dormir`)
-      .catch(console.error);
+  if (newMember.userId === pauloId && oldMember) {
+    if (
+      (oldMember?.status === "online" || oldMember?.status === "idle") &&
+      newMember.userId === pauloId &&
+      newMember.status === "offline"
+    ) {
+      const slappersChannel = newMember.guild.channels.cache.get(slappersId);
+      slappersChannel
+        .send(`Não tinha ninguém on então o <@${pauloId}> foi dormir`)
+        .catch(console.error);
+    }
   }
 
   if (!allowedDays.includes(curDay)) {
