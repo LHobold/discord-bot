@@ -25,6 +25,7 @@ const nekoCommands = [
   "!anal",
   "!test",
 ];
+
 ////////////////////////////////////////////////////
 
 const client = new Discord.Client({
@@ -41,7 +42,7 @@ client.on("ready", () => {
 
 // Gado robson
 
-client.on("message", async (msg) => {
+client.on("messageCreate", async (msg) => {
   const curDay = new Date().getDay();
 
   const msgContent = msg.content.toLowerCase();
@@ -68,7 +69,7 @@ client.on("message", async (msg) => {
 
 // General
 
-client.on("message", (msg) => {
+client.on("messageCreate", (msg) => {
   const slappersChannel = msg.guild.channels.cache.get(slappersId);
   const botmodChannel = msg.guild.channels.cache.get(botModId);
 
@@ -86,16 +87,6 @@ client.on("message", (msg) => {
     const link = `https://www.lolvvv.com/pt/champion/${champName}/probuilds`;
 
     slappersChannel.send(link).catch(console.error);
-  }
-
-  if (
-    msg.channelId === botModId &&
-    nekoCommands.some((s) => msgContent.includes(s))
-  ) {
-    clearTimeout(purgeTimer);
-    const purgeTimer = setTimeout(() => {
-      botmodChannel.send("!purge").catch(console.error);
-    }, 5000);
   }
 });
 
