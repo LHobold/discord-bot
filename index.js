@@ -25,6 +25,7 @@ const nekoCommands = [
   "!anal",
   "!test",
 ];
+const prefix = "!";
 
 ////////////////////////////////////////////////////
 
@@ -74,7 +75,7 @@ client.on("messageCreate", (msg) => {
   const botmodChannel = msg.guild.channels.cache.get(botModId);
 
   const msgContent = msg.content.toLowerCase();
-  if (msgContent.trim().startsWith("!b:")) {
+  if (msgContent.trim().startsWith(`${prefix}b:`)) {
     let champName = msgContent.split(":")[1].trim();
 
     if (champName.includes("'")) {
@@ -87,6 +88,11 @@ client.on("messageCreate", (msg) => {
     const link = `https://www.lolvvv.com/pt/champion/${champName}/probuilds`;
 
     slappersChannel.send(link).catch(console.error);
+  }
+
+  if (msgContent.trim().startsWith(`${prefix}aram`)) {
+    const message = "Bora de aramzada";
+    slappersChannel.send(message).catch(console.error);
   }
 });
 
