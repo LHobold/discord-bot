@@ -7,6 +7,7 @@ require("dotenv").config({ path: ".env" });
 const robsId = "232157423081619457";
 const earlId = "232189605414305795";
 const pauloId = "232157488529670145";
+const thiagoId = "232232173317390336";
 
 // Channels
 const slappersId = "869363826540281916";
@@ -68,7 +69,7 @@ client.on("messageCreate", async (msg) => {
   }
 });
 
-// General
+/////////// GENERAL MESSAGES ////////
 
 client.on("messageCreate", (msg) => {
   const slappersChannel = msg.guild.channels.cache.get(slappersId);
@@ -91,7 +92,7 @@ client.on("messageCreate", (msg) => {
   }
 
   if (msgContent.trim().startsWith(`${prefix}aram`)) {
-    const message = "Bora de aramzada";
+    const message = `Bora de aramzada vermes <@${pauloId}> <@${robsId}> <@${thiagoId}>`;
     slappersChannel.send(message).catch(console.error);
   }
 });
@@ -100,6 +101,8 @@ client.on("messageCreate", (msg) => {
 
 client.on("presenceUpdate", (oldMember, newMember) => {
   const curDay = new Date().getDay();
+
+  ////////////////// GENERAL UPDATES /////////////////////
 
   if (newMember.status === "online" && newMember.userId === earlId) {
     const slappersChannel = newMember.guild.channels.cache.get(slappersId);
@@ -118,6 +121,8 @@ client.on("presenceUpdate", (oldMember, newMember) => {
         .catch(console.error);
     }
   }
+
+  ////////////// GADO UPDATES ////////////////
 
   if (!allowedDays.includes(curDay)) {
     return;
