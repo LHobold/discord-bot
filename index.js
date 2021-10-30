@@ -1,7 +1,7 @@
+require("dotenv").config({ path: ".env" });
 const Discord = require("discord.js");
 const upperName = require("./utils/upperName").default;
-
-require("dotenv").config({ path: ".env" });
+const saveLogs = require("./utils/saveLogs").default;
 
 // Users
 const robsId = "232157423081619457";
@@ -18,14 +18,7 @@ const gadoId = "898985262770688111";
 
 // Others
 const allowedDays = [0, 6]; // Sat - Sun
-const nekoCommands = [
-  "!fuck",
-  "!suck",
-  "!boobjob",
-  "!blowjob",
-  "!anal",
-  "!test",
-];
+
 const prefix = "!";
 
 ////////////////////////////////////////////////////
@@ -42,11 +35,6 @@ client.on("ready", () => {
   console.log("Ready");
 });
 
-console.log(
-  new Date(
-    new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
-  ).getDay()
-);
 // Gado robson
 
 client.on("messageCreate", async (msg) => {
@@ -105,33 +93,40 @@ client.on("messageCreate", (msg) => {
 });
 
 // Presence update //
+////////////////// GENERAL UPDATES /////////////////////
+
+client.on("presenceUpdate", (oldMember, newMember) => {
+  const userLogs = require("./logs/userStatusLog.json");
+  const userLog = userLogs.users.find((u) => u.id === newMember.user.id);
+  const userLeftAt = userLog ? userLog.leftAt : new Date().getTime();
+
+  if (newMember.status === "offline") {
+    saveLogs(newMember);
+  }
+
+  if (new Date().getTime() < userLeftAt + 60 * 60 * 1000) {
+    return;
+  }
+
+  if (
+    oldMember &&
+    (oldMember?.status === "online" || oldMember?.status === "idle") &&
+    newMember.userId === pauloId &&
+    newMember.status === "offline"
+  ) {
+    const slappersChannel = newMember.guild.channels.cache.get(slappersId);
+    slappersChannel
+      .send(`Não tinha ninguém on então o <@${pauloId}> foi dormir`)
+      .catch(console.error);
+  }
+});
+
+////////////// GADO UPDATES ////////////////
 
 client.on("presenceUpdate", (oldMember, newMember) => {
   const curDay = new Date(
     new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
   ).getDay();
-
-  ////////////////// GENERAL UPDATES /////////////////////
-
-  if (newMember.status === "online" && newMember.userId === earlId) {
-    const slappersChannel = newMember.guild.channels.cache.get(slappersId);
-    // slappersChannel.send(`Vermes`).catch(console.error);
-  }
-
-  if (newMember.userId === pauloId && oldMember) {
-    if (
-      (oldMember?.status === "online" || oldMember?.status === "idle") &&
-      newMember.userId === pauloId &&
-      newMember.status === "offline"
-    ) {
-      const slappersChannel = newMember.guild.channels.cache.get(slappersId);
-      slappersChannel
-        .send(`Não tinha ninguém on então o <@${pauloId}> foi dormir`)
-        .catch(console.error);
-    }
-  }
-
-  ////////////// GADO UPDATES ////////////////
 
   if (!allowedDays.includes(curDay)) {
     return;
