@@ -95,14 +95,14 @@ client.on("messageCreate", (msg) => {
 // Presence update //
 ////////////////// GENERAL UPDATES /////////////////////
 
-client.on("presenceUpdate", (oldMember, newMember) => {
+client.on("presenceUpdate", async (oldMember, newMember) => {
   const userLogs = require("./logs/userStatusLog.json");
   const userLog = userLogs.users.find((u) => u.id === newMember.user.id);
   const userLeftAt = userLog ? userLog.leftAt : new Date().getTime();
   const userLeftRecently = new Date().getTime() < userLeftAt + 60 * 60 * 1000;
 
   if (newMember.status === "offline") {
-    saveLogs(newMember);
+    await saveLogs(newMember);
   }
 
   if (userLeftRecently) {
