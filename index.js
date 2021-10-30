@@ -42,7 +42,11 @@ client.on("ready", () => {
   console.log("Ready");
 });
 
-console.log(new Date().getDay());
+console.log(
+  new Date(
+    new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
+  ).getDay()
+);
 // Gado robson
 
 client.on("messageCreate", async (msg) => {
