@@ -31,7 +31,7 @@ client.login(process.env.BOT_TOKEN);
 /////////////////////// LISTENERS /////////////////
 
 client.on("ready", () => {
-  client.user.setActivity("mato pro boi");
+  client.user.setActivity("Free Fire");
   console.log("Ready");
 });
 
@@ -99,12 +99,13 @@ client.on("presenceUpdate", (oldMember, newMember) => {
   const userLogs = require("./logs/userStatusLog.json");
   const userLog = userLogs.users.find((u) => u.id === newMember.user.id);
   const userLeftAt = userLog ? userLog.leftAt : new Date().getTime();
+  const userLeftRecently = new Date().getTime() < userLeftAt + 60 * 60 * 1000;
 
   if (newMember.status === "offline") {
     saveLogs(newMember);
   }
 
-  if (new Date().getTime() < userLeftAt + 60 * 60 * 1000) {
+  if (userLeftRecently) {
     return;
   }
 
