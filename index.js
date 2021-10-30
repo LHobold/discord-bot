@@ -46,7 +46,9 @@ console.log(new Date().getDay());
 // Gado robson
 
 client.on("messageCreate", async (msg) => {
-  const curDay = new Date().getDay();
+  const curDay = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
+  ).getDay();
 
   const msgContent = msg.content.toLowerCase();
   const toCheck = ["qual", "som", "gado"];
@@ -101,7 +103,9 @@ client.on("messageCreate", (msg) => {
 // Presence update //
 
 client.on("presenceUpdate", (oldMember, newMember) => {
-  const curDay = new Date().getDay();
+  const curDay = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
+  ).getDay();
 
   ////////////////// GENERAL UPDATES /////////////////////
 
