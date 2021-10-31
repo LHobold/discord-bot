@@ -11,7 +11,7 @@ const logsPath = path.resolve(__dirname, "../logs/userStatusLog.json");
 
 export default async () => {
   const userLogsFile = await fs.readFile(logsPath, "utf-8");
-  const userLogs = JSON.parse(userLogsFile);
+  //   const userLogs = JSON.parse(userLogsFile);
 
-  console.log(userLogs);
+  console.log(userLogsFile);
 };
