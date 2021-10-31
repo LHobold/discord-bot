@@ -1,9 +1,14 @@
-const path = require("path");
-const fs = require("fs").promises;
+import fs from "fs/promises";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const logsPath = path.resolve(__dirname, "../logs/userStatusLog.json");
 
-exports.default = async (newMember) => {
-  const userLogs = require(logsPath);
+export default async (newMember) => {
+  const userLogsFile = await fs.readFile(logsPath, "utf-8");
+  const userLogs = JSON.parse(userLogsFile);
 
   const userLogObj = {
     id: newMember.user.id,
@@ -17,5 +22,5 @@ exports.default = async (newMember) => {
     ? userLogs.users.push(userLogObj)
     : (userLogs.users[userIndex] = userLogObj);
 
-  await fs.writeFile(logsPath, JSON.stringify(userLogs));
+  await fs.writeFile(logsPath, JSON.stringify(userLogs)).catch(console.error);
 };

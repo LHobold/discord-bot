@@ -1,7 +1,15 @@
-require("dotenv").config({ path: ".env" });
-const Discord = require("discord.js");
-const upperName = require("./utils/upperName").default;
-const saveLogs = require("./utils/saveLogs").default;
+import dotenv from "dotenv";
+dotenv.config({ path: ".env" });
+import Discord from "discord.js";
+import upperName from "./utils/upperName.js";
+import saveLogs from "./utils/saveLogs.js";
+import sendLogs from "./utils/sendLogs.js";
+import fs from "fs/promises";
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const logsPath = resolve(__dirname, "./logs/userStatusLog.json");
 
 // Users
 const robsId = "232157423081619457";
@@ -66,7 +74,7 @@ client.on("messageCreate", async (msg) => {
 
 /////////// GENERAL MESSAGES ////////
 
-client.on("messageCreate", (msg) => {
+client.on("messageCreate", async (msg) => {
   const slappersChannel = msg.guild.channels.cache.get(slappersId);
   const botmodChannel = msg.guild.channels.cache.get(botModId);
 
@@ -90,13 +98,18 @@ client.on("messageCreate", (msg) => {
     const message = `Bora de aramzada vermes <@${pauloId}> <@${robsId}> <@${thiagoId}>`;
     slappersChannel.send(message).catch(console.error);
   }
+
+  if (msgContent.trim().startsWith(`${prefix}logs`)) {
+    await sendLogs();
+  }
 });
 
 // Presence update //
 ////////////////// GENERAL UPDATES /////////////////////
 
 client.on("presenceUpdate", async (oldMember, newMember) => {
-  const userLogs = require("./logs/userStatusLog.json");
+  const userLogsFile = await fs.readFile(logsPath, "utf-8");
+  const userLogs = JSON.parse(userLogsFile);
   const userLog = userLogs.users.find((u) => u.id === newMember.user.id);
   const userLeftAt = userLog ? userLog.leftAt : new Date().getTime();
   const userLeftRecently = new Date().getTime() < userLeftAt + 60 * 60 * 1000;
