@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config({ path: ".env" });
 import Discord from "discord.js";
+import { addPlayer, removePlayer } from "./utils/manageAramPlayers.js";
 import upperName from "./utils/upperName.js";
 import saveLogs from "./utils/saveLogs.js";
 import sendLogs from "./utils/sendLogs.js";
@@ -20,6 +21,7 @@ const thiagoId = "232232173317390336";
 // Channels
 const slappersId = "869363826540281916";
 const botModId = "869364246213967882";
+const secretChannelId = "719721295452832093";
 
 // Roles
 const gadoId = "898985262770688111";
@@ -75,10 +77,14 @@ client.on("messageCreate", async (msg) => {
 /////////// GENERAL MESSAGES ////////
 
 client.on("messageCreate", async (msg) => {
+  const guild = msg.guild;
   const slappersChannel = msg.guild.channels.cache.get(slappersId);
-  const botmodChannel = msg.guild.channels.cache.get(botModId);
+  const secretChannel = msg.guild.channels.cache.get(secretChannelId);
+  const userLogsFile = await fs.readFile(logsPath, "utf-8");
+  const userLogs = JSON.parse(userLogsFile);
 
   const msgContent = msg.content.toLowerCase();
+
   if (msgContent.trim().startsWith(`${prefix}b:`)) {
     let champName = msgContent.split(":")[1].trim();
 
@@ -94,9 +100,67 @@ client.on("messageCreate", async (msg) => {
     slappersChannel.send(link).catch(console.error);
   }
 
-  if (msgContent.trim().startsWith(`${prefix}aram`)) {
-    const message = `Bora de aramzada vermes <@${pauloId}> <@${robsId}> <@${thiagoId}>`;
+  if (msgContent.trim() === `${prefix}aram`) {
+    const aramPlayersId = userLogs.aram.map((id) => `<@${id}>`).join(" ");
+    const message = `Bora de aramzada vermes ${aramPlayersId}`;
+
     slappersChannel.send(message).catch(console.error);
+  }
+
+  if (msgContent.trim().startsWith(`${prefix}aram add:`)) {
+    let message = "Nenhum verme com esse ID";
+    const newAramPlayerId = msgContent.split(":")[1].trim();
+
+    const userExists = await guild.members
+      .fetch(newAramPlayerId)
+      .catch((err) => {
+        secretChannel.send(message);
+        return null;
+      });
+
+    if (!userExists) {
+      return;
+    }
+
+    const sucess = await addPlayer(newAramPlayerId).catch((err) => {
+      secretChannel.send(err.message);
+      return null;
+    });
+
+    if (!sucess) {
+      return;
+    }
+
+    message = `Verme adicionado com sucesso: <@${newAramPlayerId}>`;
+    secretChannel.send(message).catch(console.error);
+  }
+
+  if (msgContent.trim().startsWith(`${prefix}aram remove:`)) {
+    let message = "Nenhum verme com esse ID";
+    const newAramPlayerId = msgContent.split(":")[1].trim();
+
+    const userExists = await guild.members
+      .fetch(newAramPlayerId)
+      .catch((er) => {
+        secretChannel.send(message);
+        return null;
+      });
+
+    if (!userExists) {
+      return;
+    }
+
+    const sucess = await removePlayer(newAramPlayerId).catch((err) => {
+      secretChannel.send(err.message);
+      return null;
+    });
+
+    if (!sucess) {
+      return;
+    }
+
+    message = `Verme removido com sucesso: <@${newAramPlayerId}>`;
+    secretChannel.send(message).catch(console.error);
   }
 
   if (msgContent.trim().startsWith(`${prefix}logs`)) {

@@ -1,10 +1,9 @@
 import fs from "fs/promises";
-import path from "path";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
+import { dirname, resolve } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const logsPath = path.resolve(__dirname, "../logs/userStatusLog.json");
+const logsPath = resolve(__dirname, "../logs/userStatusLog.json");
 
 export default async (newMember) => {
   const userLogsFile = await fs.readFile(logsPath, "utf-8");
