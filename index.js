@@ -114,7 +114,7 @@ client.on("messageCreate", async (msg) => {
     const userExists = await guild.members
       .fetch(newAramPlayerId)
       .catch((err) => {
-        secretChannel.send(message);
+        slappersChannel.send(message);
         return null;
       });
 
@@ -123,7 +123,7 @@ client.on("messageCreate", async (msg) => {
     }
 
     const sucess = await addPlayer(newAramPlayerId).catch((err) => {
-      secretChannel.send(err.message);
+      slappersChannel.send(err.message);
       return null;
     });
 
@@ -132,7 +132,7 @@ client.on("messageCreate", async (msg) => {
     }
 
     message = `Verme adicionado com sucesso: <@${newAramPlayerId}>`;
-    secretChannel.send(message).catch(console.error);
+    slappersChannel.send(message).catch(console.error);
   }
 
   if (msgContent.trim().startsWith(`${prefix}aram remove:`)) {
@@ -142,7 +142,7 @@ client.on("messageCreate", async (msg) => {
     const userExists = await guild.members
       .fetch(newAramPlayerId)
       .catch((er) => {
-        secretChannel.send(message);
+        slappersChannel.send(message);
         return null;
       });
 
@@ -151,7 +151,7 @@ client.on("messageCreate", async (msg) => {
     }
 
     const sucess = await removePlayer(newAramPlayerId).catch((err) => {
-      secretChannel.send(err.message);
+      slappersChannel.send(err.message);
       return null;
     });
 
@@ -160,7 +160,7 @@ client.on("messageCreate", async (msg) => {
     }
 
     message = `Verme removido com sucesso: <@${newAramPlayerId}>`;
-    secretChannel.send(message).catch(console.error);
+    slappersChannel.send(message).catch(console.error);
   }
 
   if (msgContent.trim().startsWith(`${prefix}logs`)) {
