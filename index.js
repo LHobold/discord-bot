@@ -2,12 +2,12 @@ import dotenv from "dotenv";
 dotenv.config({ path: ".env" });
 import Discord from "discord.js";
 import { addPlayer, removePlayer } from "./utils/manageAramPlayers.js";
-import upperName from "./utils/upperName.js";
 import saveLogs from "./utils/saveLogs.js";
 import sendLogs from "./utils/sendLogs.js";
 import fs from "fs/promises";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
+import sendBuildLink from "./utils/sendBuildLink.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const logsPath = resolve(__dirname, "./logs/userStatusLog.json");
@@ -77,90 +77,48 @@ client.on("messageCreate", async (msg) => {
 /////////// GENERAL MESSAGES ////////
 
 client.on("messageCreate", async (msg) => {
-  const guild = msg.guild;
+  const msgContent = msg.content.toLowerCase();
   const slappersChannel = msg.guild.channels.cache.get(slappersId);
   const secretChannel = msg.guild.channels.cache.get(secretChannelId);
-  const userLogsFile = await fs.readFile(logsPath, "utf-8");
-  const userLogs = JSON.parse(userLogsFile);
-
-  const msgContent = msg.content.toLowerCase();
+  const userLogs = JSON.parse(await fs.readFile(logsPath, "utf-8"));
 
   if (msgContent.trim().startsWith(`${prefix}b:`)) {
-    let champName = msgContent.split(":")[1].trim();
-
-    if (champName.includes("'")) {
-      const nameArr = champName.split("'");
-      champName = upperName(nameArr[0]) + upperName(nameArr[1]);
-    } else {
-      champName = upperName(champName);
+    try {
+      const champName = msgContent.split(":")[1].trim();
+      const link = await sendBuildLink(champName);
+      slappersChannel.send(link);
+    } catch (err) {
+      slappersChannel.send(err.message);
     }
-
-    const link = `https://www.lolvvv.com/pt/champion/${champName}/probuilds`;
-
-    slappersChannel.send(link).catch(console.error);
   }
 
   if (msgContent.trim() === `${prefix}aram`) {
     const aramPlayersId = userLogs.aram.map((id) => `<@${id}>`).join(" ");
     const message = `Bora de aramzada vermes ${aramPlayersId}`;
 
-    slappersChannel.send(message).catch(console.error);
+    slappersChannel.send(message);
   }
 
   if (msgContent.trim().startsWith(`${prefix}aram add:`)) {
-    let message = "Nenhum verme com esse ID";
-    const newAramPlayerId = msgContent.split(":")[1].trim();
-
-    const userExists = await guild.members
-      .fetch(newAramPlayerId)
-      .catch((err) => {
-        slappersChannel.send(message);
-        return null;
-      });
-
-    if (!userExists) {
-      return;
-    }
-
-    const sucess = await addPlayer(newAramPlayerId).catch((err) => {
+    try {
+      const newAramPlayerId = msgContent.split(":")[1].trim();
+      await addPlayer(newAramPlayerId, msg.guild);
+      message = `Verme adicionado com sucesso: <@${newAramPlayerId}>`;
+      slappersChannel.send(message).catch(console.error);
+    } catch (err) {
       slappersChannel.send(err.message);
-      return null;
-    });
-
-    if (!sucess) {
-      return;
     }
-
-    message = `Verme adicionado com sucesso: <@${newAramPlayerId}>`;
-    slappersChannel.send(message).catch(console.error);
   }
 
   if (msgContent.trim().startsWith(`${prefix}aram remove:`)) {
-    let message = "Nenhum verme com esse ID";
-    const newAramPlayerId = msgContent.split(":")[1].trim();
-
-    const userExists = await guild.members
-      .fetch(newAramPlayerId)
-      .catch((er) => {
-        slappersChannel.send(message);
-        return null;
-      });
-
-    if (!userExists) {
-      return;
-    }
-
-    const sucess = await removePlayer(newAramPlayerId).catch((err) => {
+    try {
+      const newAramPlayerId = msgContent.split(":")[1].trim();
+      await removePlayer(newAramPlayerId, msg.guild);
+      message = `Verme removido com sucesso: <@${newAramPlayerId}>`;
+      slappersChannel.send(message).catch(console.error);
+    } catch (err) {
       slappersChannel.send(err.message);
-      return null;
-    });
-
-    if (!sucess) {
-      return;
     }
-
-    message = `Verme removido com sucesso: <@${newAramPlayerId}>`;
-    slappersChannel.send(message).catch(console.error);
   }
 
   if (msgContent.trim().startsWith(`${prefix}logs`)) {
@@ -172,8 +130,7 @@ client.on("messageCreate", async (msg) => {
 ////////////////// GENERAL UPDATES /////////////////////
 
 client.on("presenceUpdate", async (oldMember, newMember) => {
-  const userLogsFile = await fs.readFile(logsPath, "utf-8");
-  const userLogs = JSON.parse(userLogsFile);
+  const userLogs = JSON.parse(await fs.readFile(logsPath, "utf-8"));
   const userLog = userLogs.users.find((u) => u.id === newMember.user.id);
   const userLeftAt = userLog ? userLog.leftAt : new Date().getTime();
   const userLeftRecently = new Date().getTime() < userLeftAt + 60 * 60 * 1000;
