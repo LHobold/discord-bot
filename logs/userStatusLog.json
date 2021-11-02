@@ -83,6 +83,7 @@
   "aram": ["232157423081619457", "232157488529670145", "232232173317390336"],
   "questions": [
     { "question": "Quem pediu esse comando?", "answer": "O papacos pora" },
-    { "question": "Wuju?", "answer": "É pra jacu" }
+    { "question": "Wuju?", "answer": "É pra jacu" },
+    { "question": "Oi linda", "answer": "Ai kawai" }
   ]
 }

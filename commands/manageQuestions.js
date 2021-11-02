@@ -37,7 +37,7 @@ export async function removeQuestion(msg) {
   const questions = logsFile.questions.map((q) => q.question.toLowerCase());
 
   // !pergunta remove Questão?
-  const question = msg.split("remove")[1].trim().toLowerCase();
+  const question = msg.split("remove")[1]?.trim().toLowerCase();
 
   if (!question) {
     throw new Error("Digite a pergunta que quer remover...");
@@ -59,7 +59,7 @@ export async function removeQuestion(msg) {
 export async function askQuestion(msg) {
   const logsFile = await fs.readJSON(logsPath);
 
-  const question = msg.split("pergunta")[1].trim().toLowerCase();
+  const question = msg.split("pergunta")[1]?.trim().toLowerCase();
 
   if (!question) {
     throw new Error("Digite a pergunta que quer fazer...");

@@ -14,11 +14,7 @@ export default (client) => {
   return client.on("messageCreate", async (msg) => {
     const msgContentLower = msg.content.toLowerCase();
     const msgContent = msg.content;
-    const test = true;
-    const slappersChannel =
-      test === true
-        ? msg.guild.channels.cache.get(secretChannelId)
-        : msg.guild.channels.cache.get(slappersId);
+    const slappersChannel = msg.guild.channels.cache.get(slappersId);
 
     const secretChannel = msg.guild.channels.cache.get(secretChannelId);
 
