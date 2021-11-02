@@ -1,4 +1,4 @@
-import upperName from "./upperName.js";
+import upperName from "../utils/upperName.js";
 import fs from "fs-extra";
 const champsPath = new URL("../data/leagueChampions.json", import.meta.url);
 

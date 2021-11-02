@@ -1,30 +1,24 @@
 import dotenv from "dotenv";
 dotenv.config({ path: ".env" });
+import process from "process";
 import Discord from "discord.js";
-import { addPlayer, removePlayer } from "./utils/manageAramPlayers.js";
-import saveLogs from "./utils/saveLogs.js";
-import sendLogs from "./utils/sendLogs.js";
+import questionsListener from "./questionsListener.js";
+import { addPlayer, removePlayer } from "./commands/manageAramPlayers.js";
+import saveLogs from "./commands/saveLogs.js";
+import sendLogs from "./commands/sendLogs.js";
 import fs from "fs/promises";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
-import sendBuildLink from "./utils/sendBuildLink.js";
+import sendBuildLink from "./commands/sendBuildLink.js";
+import { users, channels, roles } from "./data/serverIds.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const logsPath = resolve(__dirname, "./logs/userStatusLog.json");
 
-// Users
-const robsId = "232157423081619457";
-const earlId = "232189605414305795";
-const pauloId = "232157488529670145";
-const thiagoId = "232232173317390336";
-
-// Channels
-const slappersId = "869363826540281916";
-const botModId = "869364246213967882";
-const secretChannelId = "719721295452832093";
-
-// Roles
-const gadoId = "898985262770688111";
+// Ids
+const { earlId, robsId, pauloId, thiagoId } = users;
+const { slappersId, botModId, secretChannelId } = channels;
+const { gadoId } = roles;
 
 // Others
 const allowedDays = [0, 6]; // Sat - Sun
@@ -37,6 +31,8 @@ const client = new Discord.Client({
   intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_PRESENCES"],
 });
 client.login(process.env.BOT_TOKEN);
+
+process.on("SIGTERM", sendLogs);
 
 /////////////////////// LISTENERS /////////////////
 
@@ -92,6 +88,9 @@ client.on("messageCreate", async (msg) => {
     }
   }
 
+  if (msgContent.trim() === `${prefix}pergunta add`) {
+  }
+
   if (msgContent.trim() === `${prefix}aram`) {
     const aramPlayersId = userLogs.aram.map((id) => `<@${id}>`).join(" ");
     const message = `Bora de aramzada vermes ${aramPlayersId}`;
@@ -125,6 +124,10 @@ client.on("messageCreate", async (msg) => {
     await sendLogs();
   }
 });
+
+/////////////////// QUESTIONS LISTENER ///////////////////
+
+questionsListener(client);
 
 // Presence update //
 ////////////////// GENERAL UPDATES /////////////////////
