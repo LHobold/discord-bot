@@ -32,7 +32,7 @@ const client = new Discord.Client({
 });
 client.login(process.env.BOT_TOKEN);
 
-process.on("SIGTERM", sendLogs);
+process.on("SIGTERM", async () => await sendLogs());
 
 /////////////////////// LISTENERS /////////////////
 
