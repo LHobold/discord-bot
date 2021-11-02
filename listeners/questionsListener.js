@@ -1,10 +1,10 @@
-import { users, channels, roles } from "./data/serverIds.js";
+import { users, channels, roles } from "../data/serverIds.js";
 import {
   addQuestion,
   askQuestion,
   questionsList,
   removeQuestion,
-} from "./commands/manageQuestions.js";
+} from "../commands/manageQuestions.js";
 
 // Ids
 const { earlId, robsId, pauloId, thiagoId } = users;

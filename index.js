@@ -2,18 +2,16 @@ import dotenv from "dotenv";
 dotenv.config({ path: ".env" });
 import process from "process";
 import Discord from "discord.js";
-import questionsListener from "./questionsListener.js";
+import questionsListener from "./listeners/questionsListener.js";
 import { addPlayer, removePlayer } from "./commands/manageAramPlayers.js";
 import saveLogs from "./commands/saveLogs.js";
 import sendLogs from "./commands/sendLogs.js";
-import fs from "fs/promises";
-import { fileURLToPath } from "url";
-import { dirname, resolve } from "path";
+import fs from "fs-extra";
 import sendBuildLink from "./commands/sendBuildLink.js";
 import { users, channels, roles } from "./data/serverIds.js";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const logsPath = resolve(__dirname, "./logs/userStatusLog.json");
+import gadoMsgListener from "./listeners/gadoMsgListener.js";
+import gadoPresListener from "./listeners/gadoPresListener.js";
+const logsPath = new URL("./logs/userStatusLog.json", import.meta.url);
 
 // Ids
 const { earlId, robsId, pauloId, thiagoId } = users;
@@ -43,32 +41,7 @@ client.on("ready", () => {
 
 // Gado robson
 
-client.on("messageCreate", async (msg) => {
-  const curDay = new Date(
-    new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
-  ).getDay();
-
-  const msgContent = msg.content.toLowerCase();
-  const toCheck = ["qual", "som", "gado"];
-  const toCheckGado = ["quem", "gado"];
-
-  if (toCheckGado.every((s) => msgContent.includes(s))) {
-    return msg.reply("É o robs 🐂🐂🐂");
-  }
-
-  if (toCheck.every((s) => msgContent.includes(s))) {
-    return msg.reply("Vamo joga um CS rapaziada");
-  }
-
-  if (!allowedDays.includes(curDay)) {
-    return;
-  }
-
-  if ((msg.channelId = slappersId && msg.author.id === robsId)) {
-    const slappersChannel = msg.guild.channels.cache.get(slappersId);
-    slappersChannel.send(`Gado de mais`).catch(console.error);
-  }
-});
+gadoMsgListener(client, allowedDays);
 
 /////////// GENERAL MESSAGES ////////
 
@@ -76,7 +49,6 @@ client.on("messageCreate", async (msg) => {
   const msgContent = msg.content.toLowerCase();
   const slappersChannel = msg.guild.channels.cache.get(slappersId);
   const secretChannel = msg.guild.channels.cache.get(secretChannelId);
-  const userLogs = JSON.parse(await fs.readFile(logsPath, "utf-8"));
 
   if (msgContent.trim().startsWith(`${prefix}b:`)) {
     try {
@@ -92,6 +64,7 @@ client.on("messageCreate", async (msg) => {
   }
 
   if (msgContent.trim() === `${prefix}aram`) {
+    const userLogs = await fs.readJSON(logsPath);
     const aramPlayersId = userLogs.aram.map((id) => `<@${id}>`).join(" ");
     const message = `Bora de aramzada vermes ${aramPlayersId}`;
 
@@ -102,7 +75,7 @@ client.on("messageCreate", async (msg) => {
     try {
       const newAramPlayerId = msgContent.split(":")[1].trim();
       await addPlayer(newAramPlayerId, msg.guild);
-      message = `Verme adicionado com sucesso: <@${newAramPlayerId}>`;
+      const message = `Verme adicionado com sucesso: <@${newAramPlayerId}>`;
       slappersChannel.send(message).catch(console.error);
     } catch (err) {
       slappersChannel.send(err.message);
@@ -113,7 +86,7 @@ client.on("messageCreate", async (msg) => {
     try {
       const newAramPlayerId = msgContent.split(":")[1].trim();
       await removePlayer(newAramPlayerId, msg.guild);
-      message = `Verme removido com sucesso: <@${newAramPlayerId}>`;
+      const message = `Verme removido com sucesso: <@${newAramPlayerId}>`;
       slappersChannel.send(message).catch(console.error);
     } catch (err) {
       slappersChannel.send(err.message);
@@ -161,30 +134,4 @@ client.on("presenceUpdate", async (oldMember, newMember) => {
 
 ////////////// GADO UPDATES ////////////////
 
-client.on("presenceUpdate", (oldMember, newMember) => {
-  const curDay = new Date(
-    new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
-  ).getDay();
-
-  if (!allowedDays.includes(curDay)) {
-    return;
-  }
-
-  if (newMember.status === "online" && newMember.userId === robsId) {
-    const slappersChannel = newMember.guild.channels.cache.get(slappersId);
-    slappersChannel
-      .send(`O gado está online 🐂🐂🐂 <@${robsId}>`)
-      .catch(console.error);
-
-    const gadoRole = newMember.guild.roles.cache.get(gadoId);
-    newMember.member.roles.remove(gadoRole);
-  }
-
-  if (newMember.status === "idle" && newMember.userId === robsId) {
-    const slappersChannel = newMember.guild.channels.cache.get(slappersId);
-    slappersChannel.send(`<@${robsId}> foi gadar 🐂🐂🐂 `).catch(console.error);
-
-    const gadoRole = newMember.guild.roles.cache.get(gadoId);
-    newMember.member.roles.add(gadoRole);
-  }
-});
+gadoPresListener(client, allowedDays);
