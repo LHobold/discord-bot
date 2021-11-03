@@ -1,22 +1,18 @@
-import { users, channels, roles } from "../data/serverIds.js";
 import {
   addQuestion,
   askQuestion,
   questionsList,
   removeQuestion,
 } from "../commands/manageQuestions.js";
-
-// Ids
-const { earlId, robsId, pauloId, thiagoId } = users;
-const { slappersId, botModId, secretChannelId } = channels;
+import getChannels from "../utils/getChannels.js";
 
 export default (client) => {
   return client.on("messageCreate", async (msg) => {
     const msgContentLower = msg.content.toLowerCase();
     const msgContent = msg.content;
-    const slappersChannel = msg.guild.channels.cache.get(slappersId);
-
-    const secretChannel = msg.guild.channels.cache.get(secretChannelId);
+    const { slappersChannel, secretChannel } = getChannels(msg);
+    const questionCommands = ["add", "remove", "list", "help"];
+    const isCommand = questionCommands.some((e) => msgContent.includes(e));
 
     if (msgContentLower.startsWith("!pergunta add")) {
       try {
@@ -38,8 +34,9 @@ export default (client) => {
 
     if (msgContentLower.startsWith("!pergunta list")) {
       try {
-        const questions = await questionsList();
-        slappersChannel.send(questions);
+        const { questionsStr, questionAmount } = await questionsList();
+        const message = `Atualmente, existem ${questionAmount} perguntas:\n ${questionsStr}`;
+        slappersChannel.send(message);
       } catch (err) {
         slappersChannel.send(err.message);
       }
@@ -55,13 +52,7 @@ export default (client) => {
       }
     }
 
-    if (
-      msgContent.startsWith("!pergunta") &&
-      !msgContent.includes("add") &&
-      !msgContent.includes("remove") &&
-      !msgContent.includes("list") &&
-      !msgContent.includes("help")
-    ) {
+    if (msgContent.startsWith("!pergunta") && !isCommand) {
       try {
         const answer = await askQuestion(msgContent);
         slappersChannel.send(answer);

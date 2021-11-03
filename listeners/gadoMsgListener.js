@@ -1,8 +1,9 @@
-import { users, channels, roles } from "../data/serverIds.js";
+import { users, channels } from "../data/serverIds.js";
+import getChannels from "../utils/getChannels.js";
 
 // Ids
-const { earlId, robsId, pauloId, thiagoId } = users;
-const { slappersId, botModId, secretChannelId } = channels;
+const { robsId } = users;
+const { slappersId } = channels;
 
 export default (client, allowedDays) => {
   return client.on("messageCreate", async (msg) => {
@@ -27,7 +28,7 @@ export default (client, allowedDays) => {
     }
 
     if (msg.channelId === slappersId && msg.author.id === robsId) {
-      const slappersChannel = msg.guild.channels.cache.get(slappersId);
+      const { slappersChannel } = getChannels(msg);
       slappersChannel.send(`Robson gado de mais`).catch(console.error);
     }
   });

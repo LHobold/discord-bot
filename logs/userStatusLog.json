@@ -1,1 +1,179 @@
-{"users":[{"id":"232157488529670145","name":"TheHunterOfGods","leftAt":1635831290246},{"id":"232157423081619457","name":"Robson","leftAt":1635566488550},{"id":"232232173317390336","name":"Zimmermann","leftAt":1635837175803},{"id":"232189605414305795","name":"EarlMisury","leftAt":1635883894761},{"id":"306234321587535872","name":"Zhaune","leftAt":1635838866056},{"id":"254615600507125762","name":"dose10","leftAt":1635803606786},{"id":"233061085366714368","name":"Brunken","leftAt":1635848625177},{"id":"464953525458436097","name":"Lübke","leftAt":1635832441749},{"id":"214863436281020426","name":"exaust0","leftAt":1635836171380},{"id":"268090398361124864","name":"Kelvin","leftAt":1635835492025},{"id":"102376927997743104","name":"Ivy Lavarda","leftAt":1635843663592},{"id":"278304916790050816","name":"GutoVeronezi","leftAt":1635834625244},{"id":"429457053791158281","name":"Nekotina","leftAt":1635671157607},{"id":"213449917321052163","name":"Warren Buffett da Luz","leftAt":1635680412453},{"id":"304840811856658442","name":"Cantu","leftAt":1635682013885},{"id":"368937464360075277","name":"souza","leftAt":1635829020807},{"id":"382673399744299008","name":"Larii","leftAt":1635828542690},{"id":"259081583720529932","name":"Jonas Gabriel Pereira","leftAt":1635797196074},{"id":"319975255579820042","name":"Regis","leftAt":1635824684935},{"id":"275673730108358657","name":"Poze anos 80","leftAt":1635784417040},{"id":"280143392988725248","name":"Sued","leftAt":1635791175379},{"id":"232672493452656641","name":"Nodari","leftAt":1635824041811},{"id":"388123211155636225","name":"destefanivicky","leftAt":1635799860569},{"id":"330150647842340865","name":"Momscard","leftAt":1635798915968},{"id":"318551359421153281","name":"Zeturn","leftAt":1635828644840},{"id":"299599115896225792","name":"DUMKING","leftAt":1635816925833},{"id":"335550206131175426","name":"Macsandy","leftAt":1635822904639},{"id":"232305180907929600","name":"MultiRayel","leftAt":1635823012217},{"id":"362695702482255872","name":"Ricardo G Marques - 4 fase","leftAt":1635830068239},{"id":"297916293921636352","name":"Zimmermann","leftAt":1635831131055},{"id":"370248106719182848","name":"Welpeth","leftAt":1635860006206},{"id":"202965487414542337","name":"Tiago.Simao","leftAt":1635884153752}],"aram":["232157423081619457","232157488529670145","232232173317390336"],"questions":[{"question":"Quem pediu esse comando?","answer":"O papacos pora"},{"question":"Wuju?","answer":"É pra jacu"},{"question":"Oi linda","answer":"Ai kawai"}]}
+{
+  "users": [
+    {
+      "id": "232157488529670145",
+      "name": "TheHunterOfGods",
+      "leftAt": 1635831290246
+    },
+    {
+      "id": "232157423081619457",
+      "name": "Capivara",
+      "leftAt": 1635962994283
+    },
+    {
+      "id": "232232173317390336",
+      "name": "Zimmermann",
+      "leftAt": 1635837175803
+    },
+    {
+      "id": "232189605414305795",
+      "name": "EarlMisury",
+      "leftAt": 1635883894761
+    },
+    {
+      "id": "306234321587535872",
+      "name": "Zhaune",
+      "leftAt": 1635838866056
+    },
+    {
+      "id": "254615600507125762",
+      "name": "dose10",
+      "leftAt": 1635803606786
+    },
+    {
+      "id": "233061085366714368",
+      "name": "Brunken",
+      "leftAt": 1635848625177
+    },
+    {
+      "id": "464953525458436097",
+      "name": "Lübke",
+      "leftAt": 1635832441749
+    },
+    {
+      "id": "214863436281020426",
+      "name": "exaust0",
+      "leftAt": 1635836171380
+    },
+    {
+      "id": "268090398361124864",
+      "name": "Kelvin",
+      "leftAt": 1635835492025
+    },
+    {
+      "id": "102376927997743104",
+      "name": "Ivy Lavarda",
+      "leftAt": 1635843663592
+    },
+    {
+      "id": "278304916790050816",
+      "name": "GutoVeronezi",
+      "leftAt": 1635834625244
+    },
+    {
+      "id": "429457053791158281",
+      "name": "Nekotina",
+      "leftAt": 1635671157607
+    },
+    {
+      "id": "213449917321052163",
+      "name": "Warren Buffett da Luz",
+      "leftAt": 1635680412453
+    },
+    {
+      "id": "304840811856658442",
+      "name": "Cantu",
+      "leftAt": 1635682013885
+    },
+    {
+      "id": "368937464360075277",
+      "name": "souza",
+      "leftAt": 1635829020807
+    },
+    {
+      "id": "382673399744299008",
+      "name": "Larii",
+      "leftAt": 1635828542690
+    },
+    {
+      "id": "259081583720529932",
+      "name": "Jonas Gabriel Pereira",
+      "leftAt": 1635797196074
+    },
+    {
+      "id": "319975255579820042",
+      "name": "Regis",
+      "leftAt": 1635824684935
+    },
+    {
+      "id": "275673730108358657",
+      "name": "Poze anos 80",
+      "leftAt": 1635784417040
+    },
+    {
+      "id": "280143392988725248",
+      "name": "Sued",
+      "leftAt": 1635791175379
+    },
+    {
+      "id": "232672493452656641",
+      "name": "Nodari",
+      "leftAt": 1635824041811
+    },
+    {
+      "id": "388123211155636225",
+      "name": "destefanivicky",
+      "leftAt": 1635799860569
+    },
+    {
+      "id": "330150647842340865",
+      "name": "Momscard",
+      "leftAt": 1635798915968
+    },
+    {
+      "id": "318551359421153281",
+      "name": "Zeturn",
+      "leftAt": 1635828644840
+    },
+    {
+      "id": "299599115896225792",
+      "name": "DUMKING",
+      "leftAt": 1635816925833
+    },
+    {
+      "id": "335550206131175426",
+      "name": "Macsandy",
+      "leftAt": 1635822904639
+    },
+    {
+      "id": "232305180907929600",
+      "name": "MultiRayel",
+      "leftAt": 1635823012217
+    },
+    {
+      "id": "362695702482255872",
+      "name": "Ricardo G Marques - 4 fase",
+      "leftAt": 1635830068239
+    },
+    {
+      "id": "297916293921636352",
+      "name": "Zimmermann",
+      "leftAt": 1635831131055
+    },
+    {
+      "id": "370248106719182848",
+      "name": "Welpeth",
+      "leftAt": 1635860006206
+    },
+    {
+      "id": "202965487414542337",
+      "name": "Tiago.Simao",
+      "leftAt": 1635884153752
+    }
+  ],
+  "aram": ["232157423081619457", "232157488529670145", "232232173317390336"],
+  "questions": [
+    {
+      "question": "Quem pediu esse comando?",
+      "answer": "O papacos pora"
+    },
+    {
+      "question": "Wuju?",
+      "answer": "É pra jacu"
+    },
+    {
+      "question": "Oi linda",
+      "answer": "Ai kawai"
+    }
+  ]
+}

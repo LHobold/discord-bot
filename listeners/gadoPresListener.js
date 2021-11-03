@@ -1,4 +1,5 @@
 import { users, channels, roles } from "../data/serverIds.js";
+import getChannels from "../utils/getChannels.js";
 
 // Ids
 const { earlId, robsId, pauloId, thiagoId } = users;
@@ -7,6 +8,8 @@ const { gadoId } = roles;
 
 export default (client, allowedDays) => {
   return client.on("presenceUpdate", (oldMember, newMember) => {
+    const { slappersChannel } = getChannels(newMember);
+
     const curDay = new Date(
       new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
     ).getDay();
@@ -16,7 +19,6 @@ export default (client, allowedDays) => {
     }
 
     if (newMember.status === "online" && newMember.userId === robsId) {
-      const slappersChannel = newMember.guild.channels.cache.get(slappersId);
       slappersChannel
         .send(`O gado está online 🐂🐂🐂 <@${robsId}>`)
         .catch(console.error);
@@ -26,7 +28,6 @@ export default (client, allowedDays) => {
     }
 
     if (newMember.status === "idle" && newMember.userId === robsId) {
-      const slappersChannel = newMember.guild.channels.cache.get(slappersId);
       slappersChannel
         .send(`<@${robsId}> foi gadar 🐂🐂🐂 `)
         .catch(console.error);

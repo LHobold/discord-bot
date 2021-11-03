@@ -79,7 +79,7 @@ export async function askQuestion(msg) {
 export async function questionsList() {
   const logsFile = await fs.readJSON(logsPath);
 
-  const questions = logsFile.questions.map((q) => q.question);
+  const questions = logsFile?.questions.map((q) => q.question) || [];
 
   if (questions.length === 0) {
     throw new Error(
@@ -87,7 +87,7 @@ export async function questionsList() {
     );
   }
 
-  const questionsStr = questions.join(", ");
+  const questionsStr = questions.join("\n ");
 
-  return questionsStr;
+  return { questionsStr, questionAmount: questions.length };
 }
