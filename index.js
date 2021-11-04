@@ -3,16 +3,17 @@ dotenv.config({ path: ".env" });
 import process from "process";
 import Discord from "discord.js";
 import questionsListener from "./listeners/questionsListener.js";
-import { addPlayer, removePlayer } from "./commands/manageAramPlayers.js";
 import saveLogs from "./commands/saveLogs.js";
 import sendLogs from "./commands/sendLogs.js";
 import fs from "fs-extra";
 import getChannels from "./utils/getChannels.js";
 import sendBuildLink from "./commands/sendBuildLink.js";
-import { users, channels, roles } from "./data/serverIds.js";
+import { users, channels } from "./data/serverIds.js";
 import gadoMsgListener from "./listeners/gadoMsgListener.js";
 import gadoPresListener from "./listeners/gadoPresListener.js";
 import aramListener from "./listeners/aramListener.js";
+import getBackupLogs from "./functions/getBackupLogs.js";
+import saveBackupLogs from "./functions/saveBackupLogs.js";
 const logsPath = new URL("./logs/userStatusLog.json", import.meta.url);
 
 // Ids
@@ -31,11 +32,16 @@ const client = new Discord.Client({
 });
 client.login(process.env.BOT_TOKEN);
 
-process.on("SIGTERM", async () => await sendLogs());
-
 /////////////////////// LISTENERS /////////////////
 
-client.on("ready", () => {
+client.on("ready", async () => {
+  await getBackupLogs();
+
+  setInterval(async () => {
+    console.log("Saving logs");
+    await saveBackupLogs();
+  }, (process.env.LOGS_BACKUP_INTERVAL || 8) * 3600000);
+
   client.user.setActivity("Free Fire");
   console.log("Ready");
 });

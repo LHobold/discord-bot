@@ -1,11 +1,9 @@
 import upperName from "../utils/upperName.js";
 import fs from "fs-extra";
-const champsPath = new URL("../data/leagueChampions.json", import.meta.url);
+const champsPath = new URL("../data/leagueChampionsName.json", import.meta.url);
 
 export default async function sendLink(champ) {
-  const championsNameArray = await fs
-    .readJson(champsPath)
-    .then((obj) => obj.map((c) => c.name.toLowerCase()));
+  const championsNameArray = await fs.readJson(champsPath);
 
   let champName = champ;
 
