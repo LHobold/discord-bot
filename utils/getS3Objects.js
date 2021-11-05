@@ -21,10 +21,10 @@ function getS3Objects(bucket, key) {
       },
       (err, data) => {
         if (err) {
-          reject(err);
-        } else {
-          resolve(JSON.parse(data.Body.toString("utf-8")));
+          return reject(err);
         }
+
+        return resolve(JSON.parse(data.Body.toString("utf-8")));
       }
     );
   });

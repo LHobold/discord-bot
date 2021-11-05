@@ -10,5 +10,7 @@ export default async () => {
     process.env.S3_BUCKET,
     process.env.S3_BUCKET_KEY
   );
+  console.log("Getting updated logs from S3");
   await fs.writeJSON(logsPath, json);
+  console.log("S3 updated logs retrieved sucessfully");
 };
