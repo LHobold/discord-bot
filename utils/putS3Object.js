@@ -23,6 +23,7 @@ function putS3Objects(bucket, key, body) {
         if (err) {
           return reject(`Could not save logs: ${err}`);
         }
+        console.log("PUTLOGS");
         return resolve(console.log("Logs saved sucessfully"));
       }
     );

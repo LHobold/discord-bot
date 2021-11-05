@@ -23,7 +23,7 @@ function getS3Objects(bucket, key) {
         if (err) {
           return reject(err);
         }
-
+        console.log("GETLOGS");
         return resolve(JSON.parse(data.Body.toString("utf-8")));
       }
     );
