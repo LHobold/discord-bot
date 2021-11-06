@@ -87,7 +87,10 @@ questionsListener(client);
 client.on("presenceUpdate", async (oldMember, newMember) => {
   const isSpam = await userLeftRecently(newMember.user.id);
 
-  if (newMember.status === "offline") {
+  if (
+    newMember.status === "offline" ||
+    (newMember.status === "idle" && newMember.user.id === robsId)
+  ) {
     await saveLogs(newMember);
   }
 
