@@ -1,13 +1,18 @@
 import { users, channels, roles } from "../data/serverIds.js";
+import userLeftRecently from "../utils/userLeftRecently.js";
 import getChannels from "../utils/getChannels.js";
 
 // Ids
 const { earlId, robsId, pauloId, thiagoId } = users;
-const { slappersId, botModId, secretChannelId } = channels;
 const { gadoId } = roles;
 
 export default (client, allowedDays) => {
   return client.on("presenceUpdate", (oldMember, newMember) => {
+    if (newMember.user.id !== robsId) {
+      return;
+    }
+
+    const userLeftRecent = await userLeftRecently(newMember.user.id);
     const { slappersChannel } = getChannels(newMember);
 
     const curDay = new Date(
@@ -18,22 +23,34 @@ export default (client, allowedDays) => {
       return;
     }
 
-    if (newMember.status === "online" && newMember.userId === robsId) {
+    if (
+      newMember.status === "online" &&
+      (oldMember.status === "offline" || oldMember.status === "idle") &&
+      newMember.userId === robsId
+    ) {
+      const gadoRole = newMember.guild.roles.cache.get(gadoId);
+      newMember.member.roles.remove(gadoRole);
+
+      if (userLeftRecent) {
+        return;
+      }
+
       slappersChannel
         .send(`O gado está online 🐂🐂🐂 <@${robsId}>`)
         .catch(console.error);
-
-      const gadoRole = newMember.guild.roles.cache.get(gadoId);
-      newMember.member.roles.remove(gadoRole);
     }
 
     if (newMember.status === "idle" && newMember.userId === robsId) {
+      const gadoRole = newMember.guild.roles.cache.get(gadoId);
+      newMember.member.roles.add(gadoRole);
+
+      if (userLeftRecent) {
+        return;
+      }
+
       slappersChannel
         .send(`<@${robsId}> foi gadar 🐂🐂🐂 `)
         .catch(console.error);
-
-      const gadoRole = newMember.guild.roles.cache.get(gadoId);
-      newMember.member.roles.add(gadoRole);
     }
   });
 };

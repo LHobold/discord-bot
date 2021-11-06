@@ -1,12 +1,9 @@
-import {
-  addQuestion,
-  askQuestion,
-  questionsList,
-  removeQuestion,
-} from "../commands/manageQuestions.js";
+import Questions from "../commands/QuestionsClass.js";
 import getChannels from "../utils/getChannels.js";
 
 export default (client) => {
+  const questions = new Questions();
+
   return client.on("messageCreate", async (msg) => {
     const msgContentLower = msg.content.toLowerCase();
     const msgContent = msg.content;
@@ -16,7 +13,7 @@ export default (client) => {
 
     if (msgContentLower.startsWith("!pergunta add")) {
       try {
-        await addQuestion(msgContent);
+        await questions.addQuestion(msgContent);
         slappersChannel.send("Pergunta adicionada com sucesso!");
       } catch (err) {
         slappersChannel.send(err.message);
@@ -25,7 +22,7 @@ export default (client) => {
 
     if (msgContentLower.startsWith("!pergunta remove")) {
       try {
-        await removeQuestion(msgContent);
+        await questions.removeQuestion(msgContent);
         slappersChannel.send("Pergunta removida com sucesso!");
       } catch (err) {
         slappersChannel.send(err.message);
@@ -34,8 +31,7 @@ export default (client) => {
 
     if (msgContentLower.startsWith("!pergunta list")) {
       try {
-        const { questionsStr, questionAmount } = await questionsList();
-        const message = `Atualmente, existem ${questionAmount} perguntas:\n ${questionsStr}`;
+        const message = await questions.questionsList();
         slappersChannel.send(message);
       } catch (err) {
         slappersChannel.send(err.message);
@@ -44,8 +40,7 @@ export default (client) => {
 
     if (msgContentLower.startsWith("!pergunta help")) {
       try {
-        const message =
-          "Para visualizar as perguntas disponíveis digite !pergunta list. \nPara adicionar uma pergunta digite !pergunta add PERGUNTA;RESPOSTA. \nPara remover uma pergutna digite !pergunta remove PERGUNTA";
+        const message = questions.questionsHelp();
         slappersChannel.send(message);
       } catch (err) {
         slappersChannel.send(err.message);
@@ -54,7 +49,7 @@ export default (client) => {
 
     if (msgContent.startsWith("!pergunta") && !isCommand) {
       try {
-        const answer = await askQuestion(msgContent);
+        const answer = await questions.askQuestion(msgContent);
         slappersChannel.send(answer);
       } catch (err) {
         slappersChannel.send(err.message);
