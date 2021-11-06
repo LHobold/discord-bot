@@ -7,7 +7,7 @@ const { earlId, robsId, pauloId, thiagoId } = users;
 const { gadoId } = roles;
 
 export default (client, allowedDays) => {
-  return client.on("presenceUpdate", (oldMember, newMember) => {
+  return client.on("presenceUpdate", async (oldMember, newMember) => {
     if (newMember.user.id !== robsId) {
       return;
     }
