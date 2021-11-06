@@ -12,7 +12,7 @@ export default (client, allowedDays) => {
       return;
     }
 
-    const userLeftRecent = await userLeftRecently(newMember.user.id);
+    const isSpam = await userLeftRecently(newMember.user.id);
     const { slappersChannel } = getChannels(newMember);
 
     const curDay = new Date(
@@ -31,7 +31,7 @@ export default (client, allowedDays) => {
       const gadoRole = newMember.guild.roles.cache.get(gadoId);
       newMember.member.roles.remove(gadoRole);
 
-      if (userLeftRecent) {
+      if (isSpam) {
         return;
       }
 
@@ -44,7 +44,7 @@ export default (client, allowedDays) => {
       const gadoRole = newMember.guild.roles.cache.get(gadoId);
       newMember.member.roles.add(gadoRole);
 
-      if (userLeftRecent) {
+      if (isSpam) {
         return;
       }
 

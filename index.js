@@ -14,6 +14,7 @@ import gadoPresListener from "./listeners/gadoPresListener.js";
 import aramListener from "./listeners/aramListener.js";
 import getBackupLogs from "./functions/getBackupLogs.js";
 import saveBackupLogs from "./functions/saveBackupLogs.js";
+import userLeftRecently from "./utils/userLeftRecently.js";
 const logsPath = new URL("./logs/userStatusLog.json", import.meta.url);
 
 // Ids
@@ -84,16 +85,13 @@ questionsListener(client);
 ////////////////// GENERAL UPDATES /////////////////////
 
 client.on("presenceUpdate", async (oldMember, newMember) => {
-  const userLogs = await fs.readJSON(logsPath);
-  const userLog = userLogs.users.find((u) => u.id === newMember.user.id);
-  const userLeftAt = userLog ? userLog.leftAt : new Date().getTime();
-  const userLeftRecently = new Date().getTime() < userLeftAt + 60 * 60 * 1000;
+  const isSpam = await userLeftRecently(newMember.user.id);
 
   if (newMember.status === "offline") {
     await saveLogs(newMember);
   }
 
-  if (userLeftRecently) {
+  if (isSpam) {
     return;
   }
 
