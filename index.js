@@ -51,6 +51,7 @@ client.on("messageCreate", async (msg) => {
   const msgContent = msg.content.toLowerCase();
 
   if (msgContent.trim().startsWith(`${prefix}logs`)) {
+    await msg.delete();
     await logs.sendLogs();
   }
 });

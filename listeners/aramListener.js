@@ -9,6 +9,10 @@ export default (client) => {
     const msgContent = msg.content.toLowerCase();
     const { slappersChannel, secretChannel } = getChannels(msg);
 
+    if (!msgContent.trim().startsWith(prefix)) {
+      return;
+    }
+
     if (msgContent.trim() === `${prefix}aram`) {
       const message = await aram.aramMessage();
       slappersChannel.send(message);
@@ -35,5 +39,7 @@ export default (client) => {
         slappersChannel.send(err.message);
       }
     }
+
+    await msg.delete();
   });
 };

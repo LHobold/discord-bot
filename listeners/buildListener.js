@@ -17,6 +17,7 @@ export default (client) => {
       try {
         const link = await build.sendBuildLink(msgContent);
         slappersChannel.send(link);
+        await msg.delete();
       } catch (err) {
         slappersChannel.send(err.message);
       }
