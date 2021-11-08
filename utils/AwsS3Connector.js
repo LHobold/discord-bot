@@ -27,7 +27,6 @@ export default class AwsS3Connector {
           if (err) {
             return reject(`Could not save logs: ${err}`);
           }
-          console.log("PUTLOGS");
           return resolve(console.log("Logs saved sucessfully"));
         }
       );
@@ -47,7 +46,6 @@ export default class AwsS3Connector {
           if (err) {
             return reject(err);
           }
-          console.log("GETLOGS");
           return resolve(JSON.parse(data.Body.toString("utf-8")));
         }
       );

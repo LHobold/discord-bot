@@ -3,11 +3,7 @@ dotenv.config({ path: ".env" });
 import process from "process";
 import Discord from "discord.js";
 import questionsListener from "./listeners/questionsListener.js";
-import saveLogs from "./commands/saveLogs.js";
-import sendLogs from "./commands/sendLogs.js";
-import fs from "fs-extra";
-import getChannels from "./utils/getChannels.js";
-import sendBuildLink from "./commands/sendBuildLink.js";
+import Logs from "./commands/LogsClass.js";
 import { users, channels } from "./data/serverIds.js";
 import gadoMsgListener from "./listeners/gadoMsgListener.js";
 import gadoPresListener from "./listeners/gadoPresListener.js";
@@ -15,7 +11,8 @@ import aramListener from "./listeners/aramListener.js";
 import getBackupLogs from "./functions/getBackupLogs.js";
 import saveBackupLogs from "./functions/saveBackupLogs.js";
 import userLeftRecently from "./utils/userLeftRecently.js";
-const logsPath = new URL("./logs/userStatusLog.json", import.meta.url);
+import cronJobs from "./listeners/cronJobs.js";
+import buildListener from "./listeners/buildListener.js";
 
 // Ids
 const { earlId, robsId, pauloId, thiagoId } = users;
@@ -47,48 +44,22 @@ client.on("ready", async () => {
   console.log("Ready");
 });
 
-// Gado robson
-
-gadoMsgListener(client, allowedDays);
-
-// Aram listener
-
-aramListener(client);
-
-/////////// GENERAL MESSAGES ////////
+/////////// GENERAL ////////
+const logs = new Logs();
 
 client.on("messageCreate", async (msg) => {
   const msgContent = msg.content.toLowerCase();
-  const { slappersChannel, secretChannel } = getChannels(msg);
-
-  if (msgContent.trim().startsWith(`${prefix}b:`)) {
-    try {
-      const champName = msgContent.split(":")[1].trim();
-      const link = await sendBuildLink(champName);
-      slappersChannel.send(link);
-    } catch (err) {
-      slappersChannel.send(err.message);
-    }
-  }
 
   if (msgContent.trim().startsWith(`${prefix}logs`)) {
-    await sendLogs();
+    await logs.sendLogs();
   }
 });
-
-/////////////////// QUESTIONS LISTENER ///////////////////
-
-questionsListener(client);
-
-// Presence update //
-
-////////////////// GENERAL UPDATES /////////////////////
 
 client.on("presenceUpdate", async (oldMember, newMember) => {
   const isSpam = await userLeftRecently(newMember.user.id);
 
-  if (newMember.status === "offline" || newMember.user.id === robsId) {
-    await saveLogs(newMember);
+  if (newMember.status === "offline" && newMember.user.id !== robsId) {
+    await logs.saveLogs(newMember);
   }
 
   if (isSpam) {
@@ -108,6 +79,24 @@ client.on("presenceUpdate", async (oldMember, newMember) => {
   }
 });
 
+/////////////////////////////////////////////////////////////////////////////
 ////////////// GADO UPDATES ////////////////
 
 gadoPresListener(client, allowedDays);
+gadoMsgListener(client, allowedDays);
+
+////////////// CRONO JOBS /////////////////
+
+cronJobs(client, slappersId);
+
+/////////////////// QUESTIONS LISTENER ///////////////////
+
+questionsListener(client);
+
+/////////////////// BUILD LISTENER ///////////////////
+
+buildListener(client);
+
+////// ARAM LISTENER /////////
+
+aramListener(client);

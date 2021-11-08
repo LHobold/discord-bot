@@ -36,9 +36,7 @@ export default class Questions {
       answer,
     };
     logsFile.questions.push(newQuestion);
-    await fs
-      .writeFile(this.logsPath, JSON.stringify(logsFile))
-      .catch(console.error);
+    await fs.writeJSON(this.logsPath, logsFile).catch(console.error);
   }
 
   async removeQuestion(msg) {
@@ -58,9 +56,7 @@ export default class Questions {
     );
 
     logsFile.questions = newQuestions;
-    await fs
-      .writeFile(this.logsPath, JSON.stringify(logsFile))
-      .catch(console.error);
+    await fs.writeJSON(this.logsPath, logsFile).catch(console.error);
   }
 
   async askQuestion(msg) {

@@ -8,6 +8,8 @@ export const users = {
   thiagoId: "232232173317390336",
 };
 
+export const gados = ["232157423081619457"];
+
 export const channels = {
   slappersId:
     process.env.NODE_ENV === "dev"
