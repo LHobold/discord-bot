@@ -11,6 +11,10 @@ export default (client) => {
     const questionCommands = ["add", "remove", "list", "help"];
     const isCommand = questionCommands.some((e) => msgContent.includes(e));
 
+    if (!msgContentLower.trim().startsWith("!pergunta")) {
+      return;
+    }
+
     if (msgContentLower.startsWith("!pergunta add")) {
       try {
         await questions.addQuestion(msgContent);

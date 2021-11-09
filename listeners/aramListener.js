@@ -9,7 +9,7 @@ export default (client) => {
     const msgContent = msg.content.toLowerCase();
     const { slappersChannel, secretChannel } = getChannels(msg);
 
-    if (!msgContent.trim().startsWith(prefix)) {
+    if (!msgContent.trim().startsWith(`${prefix}aram`)) {
       return;
     }
 
