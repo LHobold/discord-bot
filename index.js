@@ -15,8 +15,8 @@ import cronJobs from "./listeners/cronJobs.js";
 import buildListener from "./listeners/buildListener.js";
 
 // Ids
-const { earlId, robsId, pauloId, thiagoId } = users;
-const { slappersId, botModId, secretChannelId } = channels;
+const { robsId, pauloId } = users;
+const { slappersId } = channels;
 
 // Others
 const allowedDays = [0, 6]; // Sat - Sun

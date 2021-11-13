@@ -6,7 +6,7 @@ export default (client, channelId) => {
   /// GADO JOBS ///
   const gado = new Gado();
 
-  const sendWeekendGadancia = new cron.CronJob(
+  new cron.CronJob(
     "00 30 21 * * 0",
     () => {
       gados.forEach(async (gadoId) => {
@@ -32,7 +32,7 @@ export default (client, channelId) => {
     "America/Sao_Paulo"
   );
 
-  const resetWeekendGadancia = new cron.CronJob(
+  new cron.CronJob(
     "00 0 2 * * 1",
     async () => {
       await gado.resetGadancia();

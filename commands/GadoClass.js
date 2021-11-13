@@ -21,17 +21,18 @@ export default class Gado {
   }
 
   async addGadoTime(userId) {
+    const logsFile = await this.getLogsFile();
+
     const curTime = new Date(
       new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
     ).getTime();
-
-    const logsFile = await this.getLogsFile();
 
     const gadoLogsIndex = logsFile.users.findIndex((u) => u.id === userId);
     const gadoLogs = logsFile.users[gadoLogsIndex];
 
     const leftAt = +gadoLogs.leftAt;
     const gadandoTime = curTime - leftAt;
+    console.log("Robs curTime,leftAt: " + curTime, leftAt);
     gadoLogs.gadoTime += gadandoTime;
 
     await fs.writeJSON(this.logsPath, logsFile);

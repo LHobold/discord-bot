@@ -17,7 +17,9 @@ export default class Logs {
     const userLogObj = {
       id: newMember.user.id,
       name: newMember.user.username,
-      leftAt: new Date().getTime(),
+      leftAt: new Date(
+        new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
+      ).getTime(),
       gadoTime,
     };
 
