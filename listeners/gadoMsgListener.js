@@ -1,3 +1,4 @@
+import Gado from "../commands/GadoClass.js";
 import { users, channels } from "../data/serverIds.js";
 import getChannels from "../utils/getChannels.js";
 
@@ -6,6 +7,8 @@ const { robsId } = users;
 const { slappersId } = channels;
 
 export default (client, allowedDays) => {
+  const gado = new Gado();
+
   return client.on("messageCreate", async (msg) => {
     const curDay = new Date(
       new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
@@ -21,6 +24,11 @@ export default (client, allowedDays) => {
 
     if (toCheck.every((s) => msgContent.includes(s))) {
       return msg.reply("Vamo joga um CS rapaziada");
+    }
+
+    if (msgContent.startsWith("!resetG")) {
+      await msg.delete();
+      await gado.resetGadancia();
     }
 
     if (!allowedDays.includes(curDay)) {
