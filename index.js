@@ -24,6 +24,11 @@ const allowedDays = [0, 6]; // Sat - Sun
 const prefix = "!";
 
 ////////////////////////////////////////////////////
+process.on("SIGTERM", async () => {
+  console.log("SIGTERM received. Saving logs and restarting!");
+  await saveBackupLogs();
+  console.log("Logs saved!");
+});
 
 const client = new Discord.Client({
   intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_PRESENCES"],
@@ -53,6 +58,11 @@ client.on("messageCreate", async (msg) => {
   if (msgContent.trim().startsWith(`${prefix}logs`)) {
     await msg.delete();
     await logs.sendLogs();
+  }
+
+  if (msgContent.trim().startsWith(`${prefix}updateLogs`)) {
+    await msg.delete();
+    await saveBackupLogs();
   }
 });
 

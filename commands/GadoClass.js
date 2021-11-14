@@ -32,7 +32,6 @@ export default class Gado {
 
     const leftAt = +gadoLogs.leftAt;
     const gadandoTime = curTime - leftAt;
-    console.log("Robs curTime,leftAt: " + curTime, leftAt);
     gadoLogs.gadoTime += gadandoTime;
 
     await fs.writeJSON(this.logsPath, logsFile);

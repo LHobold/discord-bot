@@ -1,11 +1,11 @@
-import { users, channels, roles } from "../data/serverIds.js";
+import { users, roles } from "../data/serverIds.js";
 import userLeftRecently from "../utils/userLeftRecently.js";
 import getChannels from "../utils/getChannels.js";
 import Logs from "../commands/LogsClass.js";
 import Gado from "../commands/GadoClass.js";
 
 // Ids
-const { earlId, robsId, pauloId, thiagoId } = users;
+const { robsId } = users;
 const { gadoId } = roles;
 
 export default (client, allowedDays) => {
@@ -16,6 +16,7 @@ export default (client, allowedDays) => {
     if (newMember.user.id !== robsId) {
       return;
     }
+
     const gadoRole = newMember.guild.roles.cache.get(gadoId);
     const isSpam = await userLeftRecently(newMember.user.id);
     const { slappersChannel } = getChannels(newMember);
