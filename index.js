@@ -22,6 +22,9 @@ const { slappersId, secretChannelId } = channels;
 process.on("SIGTERM", async () => {
   console.log("SIGTERM received. Saving logs and restarting!");
   await saveBackupLogs();
+  setTimeout(() => {
+    process.exit(0);
+  }, 1000);
 });
 
 const client = new Discord.Client({
