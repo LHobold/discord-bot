@@ -1,4 +1,5 @@
 import fs from "fs-extra";
+import dayjs from "../config/dayJs.js";
 
 export default class Logs {
   logsPath = new URL("../logs/userStatusLog.json", import.meta.url);
@@ -17,9 +18,7 @@ export default class Logs {
     const userLogObj = {
       id: newMember.user.id,
       name: newMember.user.username,
-      leftAt: new Date(
-        new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
-      ).getTime(),
+      leftAt: dayjs(),
       gadoTime,
     };
 

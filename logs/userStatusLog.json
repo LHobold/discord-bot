@@ -1,1 +1,257 @@
-{"users":[{"id":"232157488529670145","name":"TheHunterOfGods","leftAt":1636342343875},{"id":"232157423081619457","name":"Capivara","leftAt":1636400323506},{"id":"232232173317390336","name":"Zimmermann","leftAt":1636345564662},{"id":"232189605414305795","name":"EarlMisury","leftAt":1636399517281},{"id":"306234321587535872","name":"Zhaune","leftAt":1636347088065},{"id":"254615600507125762","name":"dose10","leftAt":1636300042819},{"id":"233061085366714368","name":"Brunken","leftAt":1636342865958},{"id":"464953525458436097","name":"Lübke","leftAt":1636357438624},{"id":"214863436281020426","name":"exaust0","leftAt":1636382670554},{"id":"268090398361124864","name":"Kelvin","leftAt":1636379694727},{"id":"102376927997743104","name":"Ivy Lavarda","leftAt":1636400042002},{"id":"278304916790050816","name":"GutoVeronezi","leftAt":1636392834833},{"id":"429457053791158281","name":"Nekotina","leftAt":1635671157607},{"id":"213449917321052163","name":"Warren Buffett da Luz","leftAt":1636390748553},{"id":"304840811856658442","name":"Cantu","leftAt":1636300733860},{"id":"368937464360075277","name":"souza","leftAt":1636387377974},{"id":"382673399744299008","name":"Larii","leftAt":1636384283443},{"id":"259081583720529932","name":"Jonas Gabriel Pereira","leftAt":1636383742024},{"id":"319975255579820042","name":"Regis","leftAt":1635824684935},{"id":"275673730108358657","name":"Poze anos 80","leftAt":1636328780061},{"id":"280143392988725248","name":"Sued","leftAt":1636324616539},{"id":"232672493452656641","name":"Nodari","leftAt":1636333597493},{"id":"388123211155636225","name":"destefanivicky","leftAt":1636270274710},{"id":"330150647842340865","name":"Momscard","leftAt":1636258015626},{"id":"318551359421153281","name":"Zeturn","leftAt":1636340950201},{"id":"299599115896225792","name":"DUMKING","leftAt":1636334524215},{"id":"335550206131175426","name":"Macsandy","leftAt":1636176628291},{"id":"232305180907929600","name":"MultiRayel","leftAt":1636176708436},{"id":"362695702482255872","name":"Ricardo G Marques - 4 fase","leftAt":1635830068239},{"id":"297916293921636352","name":"Zimmermann","leftAt":1636350040855},{"id":"370248106719182848","name":"Welpeth","leftAt":1635860006206},{"id":"202965487414542337","name":"Tiago.Simao","leftAt":1636108519165},{"id":"277605165018644480","name":"Rafael R.","leftAt":1636130781753},{"id":"240482527695994880","name":"Baron","leftAt":1636098899965},{"id":"447238609297211394","name":"mont","leftAt":1636160913970},{"id":"397474833820286976","name":"CamilaSanto","leftAt":1636337687454},{"id":"304832664421269504","name":"D I O","leftAt":1636399931852},{"id":"274967580106686464","name":"Flapjunior","leftAt":1636332905097},{"id":"236733495173578753","name":"Rieper","leftAt":1636357499306}],"aram":["232157423081619457","232157488529670145","232232173317390336"],"questions":[{"question":"Quem pediu esse comando?","answer":"O papacos pora"},{"question":"Wuju?","answer":"É pra jacu"},{"question":"Oi linda","answer":"Ai kawai"}],"éo":"pijas"}
+{
+  "users": [
+    {
+      "id": "232157488529670145",
+      "name": "TheHunterOfGods",
+      "leftAt": 1637028672000,
+      "gadoTime": 0
+    },
+    {
+      "id": "232157423081619457",
+      "name": "Capivara",
+      "leftAt": 1636920593000,
+      "gadoTime": 0
+    },
+    {
+      "id": "232232173317390336",
+      "name": "Zimmermann",
+      "leftAt": 1637021281000,
+      "gadoTime": 0
+    },
+    {
+      "id": "232189605414305795",
+      "name": "EarlMisury",
+      "leftAt": "2021-11-16T14:41:41.856Z",
+      "gadoTime": 0
+    },
+    {
+      "id": "306234321587535872",
+      "name": "Zhaune",
+      "leftAt": 1637027699000,
+      "gadoTime": 0
+    },
+    {
+      "id": "254615600507125762",
+      "name": "dose10",
+      "leftAt": 1637017142000,
+      "gadoTime": 0
+    },
+    {
+      "id": "233061085366714368",
+      "name": "Brunken",
+      "leftAt": 1637024232000,
+      "gadoTime": 0
+    },
+    {
+      "id": "464953525458436097",
+      "name": "Lübke",
+      "leftAt": 1637002618000,
+      "gadoTime": 0
+    },
+    {
+      "id": "214863436281020426",
+      "name": "exaust0",
+      "leftAt": 1637045675000,
+      "gadoTime": 0
+    },
+    {
+      "id": "268090398361124864",
+      "name": "Kelvin",
+      "leftAt": 1637040035000,
+      "gadoTime": 0
+    },
+    {
+      "id": "102376927997743104",
+      "name": "Ivy Lavarda",
+      "leftAt": 1637040692000,
+      "gadoTime": 0
+    },
+    {
+      "id": "278304916790050816",
+      "name": "GutoVeronezi",
+      "leftAt": 1637021110000,
+      "gadoTime": 0
+    },
+    {
+      "id": "429457053791158281",
+      "name": "Nekotina",
+      "leftAt": 1636582935090,
+      "gadoTime": 0
+    },
+    {
+      "id": "213449917321052163",
+      "name": "Warren Buffett da Luz",
+      "leftAt": 1637020929000,
+      "gadoTime": 0
+    },
+    {
+      "id": "304840811856658442",
+      "name": "Cantu",
+      "leftAt": 1637025037000,
+      "gadoTime": 0
+    },
+    {
+      "id": "368937464360075277",
+      "name": "souza",
+      "leftAt": 1637046878000,
+      "gadoTime": 0
+    },
+    {
+      "id": "382673399744299008",
+      "name": "Larii",
+      "leftAt": 1637003357000,
+      "gadoTime": 0
+    },
+    {
+      "id": "259081583720529932",
+      "name": "Jonas Gabriel Pereira",
+      "leftAt": 1637014455000,
+      "gadoTime": 0
+    },
+    {
+      "id": "319975255579820042",
+      "name": "Regis",
+      "leftAt": 1635824684935,
+      "gadoTime": 0
+    },
+    {
+      "id": "275673730108358657",
+      "name": "Poze anos 80",
+      "leftAt": 1636827581000,
+      "gadoTime": 0
+    },
+    {
+      "id": "280143392988725248",
+      "name": "Sued",
+      "leftAt": 1636495452397,
+      "gadoTime": 0
+    },
+    {
+      "id": "232672493452656641",
+      "name": "Nodari",
+      "leftAt": 1637010562000,
+      "gadoTime": 0
+    },
+    {
+      "id": "388123211155636225",
+      "name": "destefanivicky",
+      "leftAt": 1636990226000,
+      "gadoTime": 0
+    },
+    {
+      "id": "330150647842340865",
+      "name": "Momscard",
+      "leftAt": 1637042353000,
+      "gadoTime": 0
+    },
+    {
+      "id": "318551359421153281",
+      "name": "Zeturn",
+      "leftAt": 1637024029000,
+      "gadoTime": 0
+    },
+    {
+      "id": "299599115896225792",
+      "name": "DUMKING",
+      "leftAt": 1637017188000,
+      "gadoTime": 0
+    },
+    {
+      "id": "335550206131175426",
+      "name": "Macsandy",
+      "leftAt": 1636853492000,
+      "gadoTime": 0
+    },
+    {
+      "id": "232305180907929600",
+      "name": "MultiRayel",
+      "leftAt": 1637004858000,
+      "gadoTime": 0
+    },
+    {
+      "id": "362695702482255872",
+      "name": "Ricardo G Marques - 4 fase",
+      "leftAt": 1637030324000,
+      "gadoTime": 0
+    },
+    {
+      "id": "297916293921636352",
+      "name": "Zimmermann",
+      "leftAt": 1637026069000,
+      "gadoTime": 0
+    },
+    {
+      "id": "370248106719182848",
+      "name": "Welpeth",
+      "leftAt": 1637006870000,
+      "gadoTime": 0
+    },
+    {
+      "id": "202965487414542337",
+      "name": "Tiago.Simao",
+      "leftAt": 1636963714000,
+      "gadoTime": 0
+    },
+    {
+      "id": "277605165018644480",
+      "name": "Rafael R.",
+      "leftAt": 1636749544536,
+      "gadoTime": 0
+    },
+    {
+      "id": "240482527695994880",
+      "name": "Baron",
+      "leftAt": 1636543177096,
+      "gadoTime": 0
+    },
+    {
+      "id": "447238609297211394",
+      "name": "mont",
+      "leftAt": 1636505798574,
+      "gadoTime": 0
+    },
+    {
+      "id": "397474833820286976",
+      "name": "CamilaSanto",
+      "leftAt": 1637023615000,
+      "gadoTime": 0
+    },
+    {
+      "id": "304832664421269504",
+      "name": "D I O",
+      "leftAt": 1637020761000,
+      "gadoTime": 0
+    },
+    {
+      "id": "274967580106686464",
+      "name": "Flapjunior",
+      "leftAt": 1637017147000,
+      "gadoTime": 0
+    },
+    {
+      "id": "236733495173578753",
+      "name": "Rieper",
+      "leftAt": 1637028454000,
+      "gadoTime": 0
+    },
+    {
+      "id": "331190927798435850",
+      "name": "Daniel Okamura",
+      "leftAt": 1636613332603,
+      "gadoTime": 0
+    },
+    {
+      "id": "159985870458322944",
+      "name": "MEE6",
+      "leftAt": 1636647975992,
+      "gadoTime": 0
+    }
+  ],
+  "aram": ["232157423081619457", "232157488529670145", "232232173317390336"],
+  "questions": [
+    { "question": "Quem pediu esse comando?", "answer": "O papacos pora" },
+    { "question": "Oi linda", "answer": "Ai kawai" },
+    { "question": "pra tua mãe", "answer": "aquela piranha" }
+  ],
+  "éo": "pijas"
+}

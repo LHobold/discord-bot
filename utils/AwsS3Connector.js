@@ -23,7 +23,8 @@ export default class AwsS3Connector {
           Key: key,
           Body: body,
         },
-        (err, data) => {
+        // eslint-disable-next-line no-unused-vars
+        (err, _) => {
           if (err) {
             return reject(`Could not save logs: ${err}`);
           }

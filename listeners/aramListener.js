@@ -1,13 +1,13 @@
 import getChannels from "../utils/getChannels.js";
 import Aram from "../commands/AramClass.js";
+import { prefix } from "../config/config.js";
 
 export default (client) => {
   const aram = new Aram();
 
   return client.on("messageCreate", async (msg) => {
-    const prefix = "!";
     const msgContent = msg.content.toLowerCase();
-    const { slappersChannel, secretChannel } = getChannels(msg);
+    const { slappersChannel } = getChannels(msg);
 
     if (!msgContent.trim().startsWith(`${prefix}aram`)) {
       return;

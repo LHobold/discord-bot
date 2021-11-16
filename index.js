@@ -4,7 +4,7 @@ import process from "process";
 import Discord from "discord.js";
 import questionsListener from "./listeners/questionsListener.js";
 import Logs from "./commands/LogsClass.js";
-import { users, channels } from "./data/serverIds.js";
+import { users, channels, prefix, allowedDays } from "./config/config.js";
 import gadoMsgListener from "./listeners/gadoMsgListener.js";
 import gadoPresListener from "./listeners/gadoPresListener.js";
 import aramListener from "./listeners/aramListener.js";
@@ -17,11 +17,6 @@ import buildListener from "./listeners/buildListener.js";
 // Ids
 const { robsId, pauloId } = users;
 const { slappersId } = channels;
-
-// Others
-const allowedDays = [0, 6]; // Sat - Sun
-
-const prefix = "!";
 
 ////////////////////////////////////////////////////
 process.on("SIGTERM", async () => {

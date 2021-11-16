@@ -1,6 +1,7 @@
 import Gado from "../commands/GadoClass.js";
-import { users, channels } from "../data/serverIds.js";
+import { users, channels, prefix } from "../config/config.js";
 import getChannels from "../utils/getChannels.js";
+import dayjs from "../config/dayJs.js";
 
 // Ids
 const { robsId } = users;
@@ -10,9 +11,7 @@ export default (client, allowedDays) => {
   const gado = new Gado();
 
   return client.on("messageCreate", async (msg) => {
-    const curDay = new Date(
-      new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
-    ).getDay();
+    const curDay = dayjs().day();
 
     const msgContent = msg.content.toLowerCase();
     const toCheck = ["qual", "som", "gado"];
@@ -26,7 +25,7 @@ export default (client, allowedDays) => {
       return msg.reply("Vamo joga um CS rapaziada");
     }
 
-    if (msgContent.startsWith("!resetG")) {
+    if (msgContent.startsWith(`${prefix}resetG`)) {
       await msg.delete();
       await gado.resetGadancia();
     }

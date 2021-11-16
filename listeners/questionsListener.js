@@ -1,5 +1,6 @@
 import Questions from "../commands/QuestionsClass.js";
 import getChannels from "../utils/getChannels.js";
+import { prefix } from "../config/config.js";
 
 export default (client) => {
   const questions = new Questions();
@@ -7,15 +8,15 @@ export default (client) => {
   return client.on("messageCreate", async (msg) => {
     const msgContentLower = msg.content.toLowerCase();
     const msgContent = msg.content;
-    const { slappersChannel, secretChannel } = getChannels(msg);
+    const { slappersChannel } = getChannels(msg);
     const questionCommands = ["add", "remove", "list", "help"];
     const isCommand = questionCommands.some((e) => msgContent.includes(e));
 
-    if (!msgContentLower.trim().startsWith("!pergunta")) {
+    if (!msgContentLower.trim().startsWith(`${prefix}pergunta`)) {
       return;
     }
 
-    if (msgContentLower.startsWith("!pergunta add")) {
+    if (msgContentLower.startsWith(`${prefix}pergunta add`)) {
       try {
         await questions.addQuestion(msgContent);
         slappersChannel.send("Pergunta adicionada com sucesso!");
@@ -24,7 +25,7 @@ export default (client) => {
       }
     }
 
-    if (msgContentLower.startsWith("!pergunta remove")) {
+    if (msgContentLower.startsWith(`${prefix}pergunta remove`)) {
       try {
         await questions.removeQuestion(msgContent);
         slappersChannel.send("Pergunta removida com sucesso!");
@@ -33,7 +34,7 @@ export default (client) => {
       }
     }
 
-    if (msgContentLower.startsWith("!pergunta list")) {
+    if (msgContentLower.startsWith(`${prefix}pergunta list`)) {
       try {
         const message = await questions.questionsList();
         slappersChannel.send(message);
@@ -42,7 +43,7 @@ export default (client) => {
       }
     }
 
-    if (msgContentLower.startsWith("!pergunta help")) {
+    if (msgContentLower.startsWith(`${prefix}pergunta help`)) {
       try {
         const message = questions.questionsHelp();
         slappersChannel.send(message);
@@ -51,7 +52,7 @@ export default (client) => {
       }
     }
 
-    if (msgContent.startsWith("!pergunta") && !isCommand) {
+    if (msgContent.startsWith(`${prefix}pergunta`) && !isCommand) {
       try {
         const answer = await questions.askQuestion(msgContent);
         slappersChannel.send(answer);

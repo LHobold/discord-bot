@@ -1,9 +1,10 @@
 import cron from "cron";
-import { gados } from "../data/serverIds.js";
+import { gados, serverId, roles } from "../config/config.js";
 import Gado from "../commands/GadoClass.js";
 
 export default (client, channelId) => {
   /// GADO JOBS ///
+  const { gadoId: gadoRoleId } = roles;
   const gado = new Gado();
 
   new cron.CronJob(
@@ -36,7 +37,13 @@ export default (client, channelId) => {
     "00 0 2 * * 1",
     async () => {
       await gado.resetGadancia();
-      console.log("Resetting gadancia");
+      gados.forEach(async (gadoId) => {
+        const guild = client.guilds.cache.get(serverId);
+        const role = guild.roles.cache.get(gadoRoleId);
+        const member = await guild.members.fetch(gadoId);
+        member.roles.remove(role);
+      });
+      console.log("Reseting gadancia");
     },
     null,
     true,

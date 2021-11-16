@@ -1,8 +1,9 @@
-import { users, roles } from "../data/serverIds.js";
+import { users, roles } from "../config/config.js";
 import userLeftRecently from "../utils/userLeftRecently.js";
 import getChannels from "../utils/getChannels.js";
 import Logs from "../commands/LogsClass.js";
 import Gado from "../commands/GadoClass.js";
+import dayjs from "../config/dayJs.js";
 
 // Ids
 const { robsId } = users;
@@ -21,9 +22,7 @@ export default (client, allowedDays) => {
     const isSpam = await userLeftRecently(newMember.user.id);
     const { slappersChannel } = getChannels(newMember);
 
-    const curDay = new Date(
-      new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
-    ).getDay();
+    const curDay = dayjs().day();
 
     if (!allowedDays.includes(curDay)) {
       return;

@@ -1,6 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config({ path: ".env" });
 
+export const prefix = "!";
+export const allowedDays = [0, 6]; // Sat - Sun
+
 export const users = {
   earlId: "232189605414305795",
   robsId: "232157423081619457",
@@ -20,3 +23,4 @@ export const channels = {
 };
 
 export const roles = { gadoId: "898985262770688111" };
+export const serverId = "232150659531538434";
