@@ -15,14 +15,13 @@ import cronJobs from "./listeners/cronJobs.js";
 import buildListener from "./listeners/buildListener.js";
 
 // Ids
-const { robsId, pauloId } = users;
-const { slappersId } = channels;
+const { robsId, pauloId, earlId } = users;
+const { slappersId, secretChannelId } = channels;
 
 ////////////////////////////////////////////////////
 process.on("SIGTERM", async () => {
   console.log("SIGTERM received. Saving logs and restarting!");
   await saveBackupLogs();
-  console.log("Logs saved!");
 });
 
 const client = new Discord.Client({
@@ -66,6 +65,11 @@ client.on("presenceUpdate", async (oldMember, newMember) => {
 
   if (newMember.status === "offline" && newMember.user.id !== robsId) {
     await logs.saveLogs(newMember);
+  }
+
+  if (newMember.userId === earlId && newMember.status === "offline") {
+    const secretChannel = newMember.guild.channels.cache.get(secretChannelId);
+    secretChannel.send(`Earl is online.`).catch(console.error);
   }
 
   if (isSpam) {
