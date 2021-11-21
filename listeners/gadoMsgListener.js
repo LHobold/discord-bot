@@ -25,7 +25,7 @@ export default (client, allowedDays) => {
       return msg.reply("Vamo joga um CS rapaziada");
     }
 
-    if (msgContent.startsWith(`${prefix}resetG`)) {
+    if (msg.startsWith(`${prefix}resetG`)) {
       await msg.delete();
       await gado.resetGadancia();
     }

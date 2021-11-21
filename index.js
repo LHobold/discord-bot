@@ -57,7 +57,7 @@ client.on("messageCreate", async (msg) => {
     await logs.sendLogs();
   }
 
-  if (msgContent.trim().startsWith(`${prefix}updateLogs`)) {
+  if (msg.trim().startsWith(`${prefix}updateLogs`)) {
     await msg.delete();
     await saveBackupLogs();
   }
