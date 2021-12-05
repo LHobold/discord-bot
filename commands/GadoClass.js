@@ -29,6 +29,7 @@ export default class Gado {
 
     const leftAt = gadoLogs.leftAt;
     const gadandoTime = dayjs() - dayjs(leftAt);
+    console.log(`Dayjs: ${dayjs()}, DayjsLeft: ${dayjs(leftAt)}`);
     gadoLogs.gadoTime += gadandoTime;
     console.log(
       "Adding gado time: " + gadandoTime + ", total: " + gadoLogs.gadoTime
