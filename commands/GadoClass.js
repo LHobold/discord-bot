@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 import dayjsSA from "../config/dayJs.js";
-import dayjs from "dayjs.js";
+import dayjs from "dayjs";
 
 export default class Gado {
   logsPath = new URL("../logs/userStatusLog.json", import.meta.url);
