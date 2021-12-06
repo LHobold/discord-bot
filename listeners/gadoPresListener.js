@@ -25,6 +25,7 @@ export default (client, allowedDays) => {
     const curDay = dayjs().day();
 
     if (!allowedDays.includes(curDay)) {
+      await logs.saveLogs(newMember);
       return;
     }
 
@@ -40,7 +41,7 @@ export default (client, allowedDays) => {
         return;
       }
 
-      slappersChannel
+      return slappersChannel
         .send(`O gado está online 🐂🐂🐂 <@${robsId}>`)
         .catch(console.error);
     }
@@ -53,7 +54,7 @@ export default (client, allowedDays) => {
         return;
       }
 
-      slappersChannel
+      return slappersChannel
         .send(`<@${robsId}> foi gadar 🐂🐂🐂 `)
         .catch(console.error);
     }

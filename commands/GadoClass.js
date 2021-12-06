@@ -1,5 +1,6 @@
 import fs from "fs-extra";
-import dayjs from "../config/dayJs.js";
+import dayjsSA from "../config/dayJs.js";
+import dayjs from "dayjs.js";
 
 export default class Gado {
   logsPath = new URL("../logs/userStatusLog.json", import.meta.url);
@@ -28,8 +29,10 @@ export default class Gado {
     const gadoLogs = logsFile.users[gadoLogsIndex];
 
     const leftAt = gadoLogs.leftAt;
-    const gadandoTime = dayjs() - dayjs(leftAt);
-    console.log(`Dayjs: ${dayjs()}, DayjsLeft: ${dayjs(leftAt)}`);
+    const gadandoTime = dayjsSA() - dayjs(leftAt);
+
+    console.log(`Dayjs: ${dayjsSA()}, DayjsLeft: ${dayjs(leftAt)}`);
+
     gadoLogs.gadoTime += gadandoTime;
     console.log(
       "Adding gado time: " + gadandoTime + ", total: " + gadoLogs.gadoTime
