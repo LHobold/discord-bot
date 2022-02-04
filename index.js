@@ -75,11 +75,6 @@ client.on("presenceUpdate", async (oldMember, newMember) => {
     await logs.saveLogs(newMember);
   }
 
-  if (newMember.userId === earlId && newMember.status === "offline") {
-    const secretChannel = newMember.guild.channels.cache.get(secretChannelId);
-    secretChannel.send(`Earl is online.`).catch(console.error);
-  }
-
   if (isSpam) {
     return;
   }
