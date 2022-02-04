@@ -61,6 +61,11 @@ client.on("messageCreate", async (msg) => {
     await msg.delete();
     await saveBackupLogs();
   }
+
+  if (msg.content.trim().startsWith(`${prefix}getLogs`)) {
+    await msg.delete();
+    await getBackupLogs();
+  }
 });
 
 client.on("presenceUpdate", async (oldMember, newMember) => {
