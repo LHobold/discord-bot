@@ -23,7 +23,7 @@ export default class Command {
     const listener = msg.trim().split(":")[1];
 
     if (!(listener in userLogs.mute)) {
-      throw new Error("Nenhum listener encontrado");
+      throw new Error("Nenhum listener encontrado.");
     }
 
     userLogs.mute[listener] = !userLogs.mute[listener];
@@ -32,7 +32,7 @@ export default class Command {
       .writeFile(this.logsPath, JSON.stringify(userLogs))
       .catch(console.error);
 
-    return `${listener} mutado com sucesso`;
+    return `${listener} mutado com sucesso.`;
   }
 
   async listListener() {
@@ -41,7 +41,9 @@ export default class Command {
     let message = "Status dos listeners: \n";
 
     for (const listener in listeners) {
-      message += `${listener}: ${listeners[listener]} \n`;
+      message += `${listener}: ${
+        listeners[listener] ? "Mutado" : "Ativado"
+      } \n`;
     }
 
     return message;

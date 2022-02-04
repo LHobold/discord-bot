@@ -6,7 +6,7 @@ export default (client) => {
   const command = new Command();
 
   return client.on("messageCreate", async (msg) => {
-    const msgContent = msg.content.toLowerCase();
+    const msgContent = msg.content;
     const { slappersChannel } = getChannels(msg);
 
     if (!msgContent.trim().startsWith(`${prefix}mute`)) {
