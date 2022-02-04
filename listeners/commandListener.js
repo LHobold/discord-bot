@@ -9,6 +9,10 @@ export default (client) => {
     const msgContent = msg.content.toLowerCase();
     const { slappersChannel } = getChannels(msg);
 
+    if (!msgContent.trim().startsWith(`${prefix}mute`)) {
+      return;
+    }
+
     if (msg.member.user.id != users.earlId) {
       try {
         const message = "Somente o Earl pode mudar a configuração do bot.";
@@ -18,10 +22,6 @@ export default (client) => {
         slappersChannel.send(err.message);
       }
 
-      return;
-    }
-
-    if (!msgContent.trim().startsWith(`${prefix}mute`)) {
       return;
     }
 

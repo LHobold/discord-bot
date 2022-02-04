@@ -4,6 +4,7 @@ import process from "process";
 import Discord from "discord.js";
 import questionsListener from "./listeners/questionsListener.js";
 import Logs from "./commands/LogsClass.js";
+import Command from "./commands/CommandClass.js";
 import { users, channels, prefix, allowedDays } from "./config/config.js";
 import gadoMsgListener from "./listeners/gadoMsgListener.js";
 import gadoPresListener from "./listeners/gadoPresListener.js";
@@ -13,6 +14,7 @@ import saveBackupLogs from "./functions/saveBackupLogs.js";
 import userLeftRecently from "./utils/userLeftRecently.js";
 import cronJobs from "./listeners/cronJobs.js";
 import buildListener from "./listeners/buildListener.js";
+import commandListener from "./listeners/commandListener.js";
 
 // Ids
 const { robsId, pauloId, earlId } = users;
@@ -48,6 +50,7 @@ client.on("ready", async () => {
 
 /////////// GENERAL ////////
 const logs = new Logs();
+const commands = new Command();
 
 client.on("messageCreate", async (msg) => {
   const msgContent = msg.content.toLowerCase();
@@ -69,6 +72,10 @@ client.on("messageCreate", async (msg) => {
 });
 
 client.on("presenceUpdate", async (oldMember, newMember) => {
+  if (await commands.checkMute("presenceListener")) {
+    return;
+  }
+
   const isSpam = await userLeftRecently(newMember.user.id);
 
   if (newMember.status === "offline" && newMember.user.id !== robsId) {
@@ -105,6 +112,9 @@ cronJobs(client, slappersId);
 /////////////////// QUESTIONS LISTENER ///////////////////
 
 questionsListener(client);
+
+/////////////////// COMMAND LISTENER ///////////////////
+commandListener(client);
 
 /////////////////// BUILD LISTENER ///////////////////
 

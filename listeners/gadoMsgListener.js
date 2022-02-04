@@ -1,4 +1,5 @@
 import Gado from "../commands/GadoClass.js";
+import Command from "../commands/CommandClass.js";
 import { users, channels, prefix } from "../config/config.js";
 import getChannels from "../utils/getChannels.js";
 import dayjs from "../config/dayJs.js";
@@ -9,8 +10,13 @@ const { slappersId } = channels;
 
 export default (client, allowedDays) => {
   const gado = new Gado();
+  const command = new Command();
 
   return client.on("messageCreate", async (msg) => {
+    if (await command.checkMute("gadoMessageListener")) {
+      return;
+    }
+
     const curDay = dayjs().day();
 
     const msgContent = msg.content.toLowerCase();

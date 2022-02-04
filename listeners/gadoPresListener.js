@@ -3,6 +3,7 @@ import userLeftRecently from "../utils/userLeftRecently.js";
 import getChannels from "../utils/getChannels.js";
 import Logs from "../commands/LogsClass.js";
 import Gado from "../commands/GadoClass.js";
+import Command from "../commands/CommandClass.js";
 import dayjs from "../config/dayJs.js";
 
 // Ids
@@ -12,8 +13,13 @@ const { gadoId } = roles;
 export default (client, allowedDays) => {
   const logs = new Logs();
   const gado = new Gado();
+  const command = new Command();
 
   return client.on("presenceUpdate", async (oldMember, newMember) => {
+    if (await command.checkMute("gadoPresenceListener")) {
+      return;
+    }
+
     if (newMember.user.id !== robsId) {
       return;
     }
