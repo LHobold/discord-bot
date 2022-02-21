@@ -1,13 +1,15 @@
 import cron from "cron";
 import { gados, serverId, roles } from "../config/config.js";
 import Gado from "../commands/GadoClass.js";
+import { prefix } from "../config/config.js";
+import getChannels from "../utils/getChannels.js";
 
 export default (client, channelId) => {
   /// GADO JOBS ///
   const { gadoId: gadoRoleId } = roles;
   const gado = new Gado();
 
-  new cron.CronJob(
+  const gadoMessage = new cron.CronJob(
     "00 30 21 * * 0",
     () => {
       gados.forEach(async (gadoId) => {
@@ -29,11 +31,11 @@ export default (client, channelId) => {
       });
     },
     null,
-    true,
+    false,
     "America/Sao_Paulo"
   );
 
-  new cron.CronJob(
+  const resetGagancia = new cron.CronJob(
     "00 0 2 * * 1",
     async () => {
       await gado.resetGadancia();
@@ -46,7 +48,59 @@ export default (client, channelId) => {
       console.log("Reseting gadancia");
     },
     null,
-    true,
+    false,
     "America/Sao_Paulo"
   );
+
+  return client.on("messageCreate", async (msg) => {
+    const { slappersChannel } = getChannels(msg);
+    const msgContent = msg.content.trim();
+
+    if (!msgContent.startsWith(`${prefix}cronJob`)) {
+      return;
+    }
+
+    const cronJob = msgContent.split(":")[1].trim();
+    const command = msgContent.split(":")[2].trim();
+
+    if (command === "stop") {
+      if (cronJob === "gadoMessage") {
+        gadoMessage.stop();
+      }
+
+      if (cronJob === "resetGadancia") {
+        resetGagancia.stop();
+      }
+
+      slappersChannel.send(`CronJob ${cronJob} desativado com sucesso!`);
+    }
+
+    if (command === "start") {
+      if (cronJob === "gadoMessage") {
+        gadoMessage.start();
+      }
+
+      if (cronJob === "resetGadancia") {
+        resetGagancia.start();
+      }
+
+      slappersChannel.send(`CronJob ${cronJob} iniciado com sucesso!`);
+    }
+
+    if (command === "status") {
+      let status;
+
+      if (cronJob === "gadoMessage") {
+        status = gadoMessage.running;
+      }
+
+      if (cronJob === "resetGadancia") {
+        status = resetGagancia.start();
+      }
+
+      slappersChannel.send(
+        `Status do cronJob ${cronJob}: ${status ? "Ativo" : "Desativado"}`
+      );
+    }
+  });
 };

@@ -17,8 +17,8 @@ import buildListener from "./listeners/buildListener.js";
 import commandListener from "./listeners/commandListener.js";
 
 // Ids
-const { robsId, pauloId, earlId } = users;
-const { slappersId, secretChannelId } = channels;
+const { robsId, pauloId } = users;
+const { slappersId } = channels;
 
 ////////////////////////////////////////////////////
 process.on("SIGTERM", async () => {
